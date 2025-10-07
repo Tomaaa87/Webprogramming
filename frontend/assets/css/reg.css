@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/za\ login.jpg');
+    background-size: cover;
+    background-position: center;
+     background-color: rgba(0,0,0,0.6);
+     background-blend-mode: multiply;
+    background-position: center;
+    background-size: cover;
+    color: white;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    min-height: 100vh;
+    margin-top: 30px;
+}
+
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 10px;
+    position: fixed; 
+    top: 0;
+    z-index: 1000;
+    margin-top: 30px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    margin: 0 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: red;
+}
+
+h2 {
+    text-align: center;
+    color: red; 
+    margin-top: 80px; 
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+form {
+    background-color: rgba(0, 0, 0, 0.7); 
+    padding: 60px;
+    border-radius: 8px;
+    width: 100%; 
+    max-width: 600px; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    color: white;
+    margin-bottom: 20px;
+} 
+
+label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: grey;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    font-size: 1rem;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+small {
+    color: grey;
+    font-size: 0.8rem;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: darkred;
+}
+
+.hamburger-menu {
+    display: none;
+}
+
+.strength-meter {
+    height: 5px;
+    width: 100%;
+    background-color: #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 5px;
+    transition: width 0.3s;
+}
+
+.strength-bar.weak {
+    background-color: red;
+    width: 33%;
+}
+
+.strength-bar.moderate {
+    background-color: orange;
+    width: 66%;
+}
+
+.strength-bar.strong {
+    background-color: green;
+    width: 100%;
+}
+#weather{
+    text-align: center;
+    font-size: 20px;
+    
+}
+.active {
+    font-weight: bold;
+    color: red; 
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); 
+    position: bottom;
+    width: 100%;
+    bottom: 0;
+}
+
+footer p {
+    color: grey;
+    font-size: 1rem;
+}
+
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    form {
+        padding: 30px;
+    }
+
+    nav a {
+        font-size: 1rem;
+        padding: 10px 15px;
+        margin: 0 10px;
+    }
+
+    body {
+        background: auto;
+        background-blend-mode: darken;
+    }
+
+    label,
+    input,
+    select,
+    small {
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    label,
+    input,
+    select,
+    small {
+        font-size: 0.8rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+
+    body {
+        background: auto;
+        background-blend-mode: darken;
+    }
+
+    .desktop-menu {
+        display: none; 
+    }
+
+    .hamburger {
+        display: block; 
+        position: absolute;
+        top: 20px; 
+        right: 20px; 
+        z-index: 1000; 
+        cursor: pointer;
+        color: white;
+        font-size: 2rem; 
+    }
+
+    .hamburger-menu {
+        position: absolute;
+        top: 60px; 
+        right: 10px; 
+        background-color: rgba(0, 0, 0, 0.8); 
+        padding: 20px;
+        border-radius: 8px;
+        z-index: 999; 
+    }
+
+    .hamburger-menu a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        display: block;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .hamburger-menu a:hover {
+        background-color: red;
+    }
+
+    .hamburger-menu.open {
+        display: block; 
+    }
+}

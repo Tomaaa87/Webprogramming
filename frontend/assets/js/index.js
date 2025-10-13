@@ -96,5 +96,32 @@ app.route({
            console.log("About page ready!");
     }
 });
+app.route({
+    view: "gume",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/gume.css');
+     
+           console.log("About page ready!");
+    }
+});
+app.route({
+    view: "motor",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/motor.css');
+   
+           console.log("About page ready!");
+    }
+});
+app.route({
+    view: "body",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/body12.css');
+     
+           console.log("About page ready!");
+    }
+});
 app.run();
 

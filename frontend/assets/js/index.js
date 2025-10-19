@@ -49,10 +49,7 @@ app.route({
     view: "login",
     onReady: function() {
         console.log("About page created!");
-        loadCSS('./assets/css/login.css');
-        loadJS('./assets/js/login.js', function() {
-            console.log('test1');
-        });
+        loadCSS('./assets/css/reg.css');
 
         console.log("About page ready!");
     }
@@ -120,6 +117,14 @@ app.route({
         console.log("About page created!");
         loadCSS('./assets/css/body12.css');
      
+           console.log("About page ready!");
+    }
+});
+app.route({
+    view: "cart",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/shop.css');
            console.log("About page ready!");
     }
 });

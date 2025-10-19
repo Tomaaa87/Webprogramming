@@ -167,7 +167,55 @@ footer p {
     font-weight: bold;
     color: red; 
 }
+.cart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  max-width: 700px;
+  margin: 0 auto;
+}
 
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 10px;
+  padding: 15px;
+  color: #fff;
+}
+
+.cart-img {
+  width: 120px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.cart-details h3 {
+  margin: 0;
+}
+
+.cart-total {
+  text-align: right;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.checkout-btn {
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.checkout-btn:hover {
+  background: #b71c1c;
+}
 
 @media (max-width: 768px) {
     .categories {

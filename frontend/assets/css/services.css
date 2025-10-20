@@ -1,0 +1,248 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('../images/services.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+}
+
+.container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+    font-size: 3rem;
+    margin: 0;
+    padding: 20px 0;
+    color: #ff4d4d;
+    text-shadow: 2px 2px 5px #000;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.category {
+    background: #333;
+    border: 2px solid #ff4d4d;
+    border-radius: 10px;
+    text-align: center;
+    padding: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.category:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 77, 77, 0.5);
+}
+
+.category h2 {
+    margin: 0.5rem 0 0;
+    font-size: 1.5rem;
+    color: #ff4d4d;
+}
+
+.category-image {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #ff4d4d;
+    margin-bottom: 1rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.view-more {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.view-more:hover {
+    background-color: red;
+    transform: scale(1.05);
+}
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 10px 0;
+    margin-top: 30px;
+}
+
+/*nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    margin: 0 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: red;
+}*/
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 10px 0;
+    margin-top: 30px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    margin: 0 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: red;
+}
+.hamburger-menu {
+    display: none;
+}
+.active {
+    font-weight: bold;
+    color: red; 
+}
+footer p {
+    color: grey;
+    font-size: 1rem;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); 
+    margin-top: auto; 
+    position: bottom;
+
+}
+
+
+@media (max-width: 1200px) {
+    .container1 {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .categories {
+        grid-template-columns: 1fr;
+    }
+
+    .container1 {
+        min-height: 100vh;
+    }
+
+    h1 {
+        font-size: 2rem;
+        padding: 15px 0;
+    }
+
+    .category {
+        padding: 1rem;
+    }
+
+    .view-more {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+    nav a {
+        font-size: 1rem; 
+        padding: 10px 15px;
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+        padding: 10px 0;
+    }
+
+    .category h2 {
+        font-size: 1.3rem;
+    }
+
+    .view-more {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+    
+    .desktop-menu {
+        display: none; 
+    }
+
+    .hamburger {
+        display: block; 
+        position: absolute; 
+        top: 20px; 
+        right: 20px; 
+        z-index: 1000; 
+        cursor: pointer;
+        color: white;
+        font-size: 2rem; 
+    }
+
+    .hamburger-menu {
+        
+        position: absolute;
+        top: 60px; 
+        right: 10px; 
+        background-color: rgba(0, 0, 0, 0.8); 
+        padding: 20px;
+        border-radius: 8px;
+        z-index: 999; 
+    }
+
+    .hamburger-menu a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        display: block;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .hamburger-menu a:hover {
+        background-color: red;
+    }
+
+    .hamburger-menu.open {
+        display: block; 
+    }
+}

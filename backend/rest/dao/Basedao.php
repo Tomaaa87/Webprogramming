@@ -46,5 +46,23 @@ class BaseDao {
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+    public function query($sql, $params = []) {
+    $stmt = $this->connection->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll();
+    }
+
+    public function query_unique($sql, $params = []) {
+    $stmt = $this->connection->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetch();
+    }
+
+    public function query_execute($sql, $params = []) {
+    $stmt = $this->connection->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->rowCount();
+    }
+
 }
 ?>

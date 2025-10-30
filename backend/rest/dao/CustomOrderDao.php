@@ -38,7 +38,7 @@ class CustomOrderDao extends BaseDao {
             ORDER BY co.created_at DESC
         ", ["uid" => $userId]);
     }
-
+}
     /**
      * Unosi novu custom narudžbu u bazu
      * 
@@ -47,3 +47,4 @@ class CustomOrderDao extends BaseDao {
      * @param string $details - Opis što korisnik želi
      * @param float $estimated_price - Procijenjena cijena
      * @param string $category - Kategor*
+*/

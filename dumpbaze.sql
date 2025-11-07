@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cart` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `quantity` int DEFAULT '1',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL,
+  `product_id` int unsigned NOT NULL,
+  `quantity` int unsigned DEFAULT '1',
   `unit_price` decimal(10,2) NOT NULL,
   `added_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `cart_status` enum('active','checked_out','abandoned') DEFAULT 'active',
@@ -56,7 +56,7 @@ DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categories` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `category_name` varchar(100) NOT NULL,
   `description` text,
   `added_at` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -83,8 +83,8 @@ DROP TABLE IF EXISTS `custom_orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `custom_orders` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `order_id` int NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int unsigned NOT NULL,
   `title` varchar(100) NOT NULL,
   `details` text,
   `estimated_price` decimal(10,2) DEFAULT NULL,
@@ -114,10 +114,10 @@ DROP TABLE IF EXISTS `order_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_items` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `order_id` int NOT NULL,
-  `product_id` int DEFAULT NULL,
-  `quantity` int DEFAULT '1',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int unsigned NOT NULL,
+  `product_id` int unsigned DEFAULT NULL,
+  `quantity` int unsigned DEFAULT '1',
   `price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
@@ -145,8 +145,8 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL,
   `total_amount` decimal(10,2) DEFAULT '0.00',
   `status` enum('Pending','Processing','Completed','Cancelled') DEFAULT 'Pending',
   `is_custom` tinyint(1) DEFAULT '0',
@@ -175,7 +175,7 @@ DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `description` text,
@@ -206,7 +206,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,

@@ -38,6 +38,15 @@ class OrderItemDao extends BaseDao {
             ["oid" => $orderId]
         );
     }
+    public function getByOrderId($orderId) {
+        return $this->query(
+            "SELECT * FROM orderitems WHERE order_id = :oid",
+            ["oid" => $orderId]
+        );
+    }
+    public function getAllio() {
+        return $this->getAll();
+    }
 }
 ?>
 

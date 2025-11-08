@@ -13,6 +13,15 @@ class CustomOrderDao extends BaseDao {
     public function __construct() {
         parent::__construct("custom_orders");
     }
+     public function insertCustomOrder($orderData) {
+
+        return $this->insert([
+            "order_id"        => $orderData["order_id"],
+            "title"           => $orderData["title"],
+            "estimated_price" => $orderData["estimated_price"],
+            "details"         => $orderData["details"]
+        ]);
+    }
 
     /**
      * Dohvaća sve custom narudžbe iz baze

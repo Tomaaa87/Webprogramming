@@ -1,0 +1,31 @@
+
+<div class="container33">
+    <h2>Create Custom Order</h2>
+
+    <form id="customOrderForm">
+
+        
+        <label for="categorySelect">Select Category:</label>
+        <select id="categorySelect" required>
+        <option value="">-- Select a category --</option>
+        <option value="1">Tires</option>
+        <option value="2">Engine Parts</option>
+        <option value="3">Body Parts</option>
+        </select>
+
+        <label for="orderTitle">Order title:</label>
+        <input type="text" id="orderTitle" placeholder="Example: DAZA engine retrofit for Golf 7R" required>
+
+        
+        <label for="estimatedPrice">Estimated price (EUR):</label>
+        <input type="number" id="estimatedPrice" placeholder="10000" required>
+
+        
+        <label for="details">Describe what you want:</label>
+        <textarea id="details" rows="5" placeholder="Write all the details..." required></textarea>
+
+        <button type="submit" class="btn">Submit Custom Order</button>
+    </form>
+
+    <p id="responseMsg"></p>
+</div>

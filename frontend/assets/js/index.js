@@ -128,5 +128,13 @@ app.route({
            console.log("About page ready!");
     }
 });
+app.route({
+    view: "custom",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/shop.css');
+           console.log("About page ready!");
+    }
+});
 app.run();
 

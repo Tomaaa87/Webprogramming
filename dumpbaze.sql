@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cart` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `quantity` int DEFAULT '1',
-  `unit_price` decimal(10,2) NOT NULL,
-  `added_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `id` int unsigned NOT NULL AUTO_INCREMENT ,
+  `user_id` int unsigned NOT NULL ,
+  `product_id` int unsigned NOT NULL ,
+  `quantity` int unsigned DEFAULT '1' ,
+  `unit_price` decimal(10,2) NOT NULL ,
+  `added_at` datetime DEFAULT CURRENT_TIMESTAMP ,
   `cart_status` enum('active','checked_out','abandoned') DEFAULT 'active',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -56,10 +56,10 @@ DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categories` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(100) NOT NULL,
-  `description` text,
-  `added_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `id` int unsigned NOT NULL AUTO_INCREMENT ,
+  `category_name` varchar(100) NOT NULL ,
+  `description` text NOT NULL ,
+  `added_at` datetime DEFAULT CURRENT_TIMESTAMP ,
   PRIMARY KEY (`id`),
   UNIQUE KEY `category_name` (`category_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -83,12 +83,12 @@ DROP TABLE IF EXISTS `custom_orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `custom_orders` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `order_id` int NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `details` text,
-  `estimated_price` decimal(10,2) DEFAULT NULL,
-  `category` varchar(100) DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT ,
+  `order_id` int unsigned NOT NULL ,
+  `title` varchar(100) NOT NULL ,
+  `details` text NOT NULL ,
+  `estimated_price` decimal(10,2) DEFAULT NULL ,
+  `category` varchar(100) DEFAULT NULL ,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
@@ -114,11 +114,11 @@ DROP TABLE IF EXISTS `order_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_items` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `order_id` int NOT NULL,
-  `product_id` int DEFAULT NULL,
-  `quantity` int DEFAULT '1',
-  `price` decimal(10,2) NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT ,
+  `order_id` int unsigned NOT NULL ,
+  `product_id` int unsigned DEFAULT NULL ,
+  `quantity` int unsigned DEFAULT '1' ,
+  `price` decimal(10,2) NOT NULL ,
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
   KEY `product_id` (`product_id`),
@@ -145,12 +145,12 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `total_amount` decimal(10,2) DEFAULT '0.00',
-  `status` enum('Pending','Processing','Completed','Cancelled') DEFAULT 'Pending',
-  `is_custom` tinyint(1) DEFAULT '0',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `id` int unsigned NOT NULL AUTO_INCREMENT ,
+  `user_id` int unsigned NOT NULL ,
+  `total_amount` decimal(10,2) DEFAULT '0.00' ,
+  `status` enum('Pending','Processing','Completed','Cancelled') DEFAULT 'Pending' ,
+  `is_custom` tinyint(1) DEFAULT '0' ,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP ,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
@@ -175,12 +175,12 @@ DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `description` text,
-  `category_id` int DEFAULT NULL,
-  `image_url` varchar(255) DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT ,
+  `name` varchar(100) NOT NULL ,
+  `price` decimal(10,2) NOT NULL ,
+  `description` text NOT NULL ,
+  `category_id` int unsigned DEFAULT NULL ,
+  `image_url` varchar(255) DEFAULT NULL ,
   `added_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`),
@@ -206,13 +206,13 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `role` enum('user','admin') DEFAULT 'user',
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL ,
+  `email` varchar(100) NOT NULL ,
+  `password` varchar(255) NOT NULL ,
+  `address` varchar(255) DEFAULT NULL ,
+  `phone` varchar(20) DEFAULT NULL ,
+  `role` enum('user','admin') DEFAULT 'user' ,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)

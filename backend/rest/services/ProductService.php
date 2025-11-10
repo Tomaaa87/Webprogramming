@@ -26,5 +26,8 @@ class ProductService extends BaseService {
     public function deleteProduct($id) {
         return $this->dao->deleteProduct($id);
     }
+    public function getAllProducts() {
+        return $this->dao->getAllProducts();
+    }
 }
 ?>

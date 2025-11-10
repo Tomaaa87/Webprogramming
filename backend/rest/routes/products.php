@@ -13,13 +13,17 @@ Flight::route('POST /products', function() {
     Flight::json(Flight::productService()->addProduct($data));
 });
 
-Flight::route('PUT /products/@id', function($id) {
+Flight::route('PATCH /products/@id', function($id) {
     $data = Flight::request()->data->getData();
     Flight::json(Flight::productService()->updateProduct($id, $data));
 });
 
 Flight::route('DELETE /products/@id', function($id) {
     Flight::json(["deleted" => Flight::productService()->deleteProduct($id)]);
+});
+
+Flight::route('GET /products/all', function() {
+    Flight::json(Flight::productService()->getAllProducts());
 });
 
 ?>

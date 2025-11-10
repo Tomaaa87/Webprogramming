@@ -4,30 +4,30 @@ Flight::route('GET /orders', function() {
     Flight::json(Flight::orderService()->getAllOrders());
 });
 
-Flight::route('GET /orders/@id', function($id) {
-    Flight::json(Flight::orderService()->getById($id));
-});
-
-Flight::route('GET /orders/user/@user_id', function($user_id) {
-    Flight::json(Flight::orderService()->getOrdersByUser($user_id));
-});
-
-Flight::route('GET /orders/total/@id', function($id) {
-    Flight::json(Flight::orderService()->getOrderTotal($id));
-});
 
 Flight::route('POST /orders', function() {
     $data = Flight::request()->data->getData();
     Flight::json(["order_id" => Flight::orderService()->insertOrder($data)]);
 });
 
-Flight::route('PUT /orders/@id/status', function($id) {
+
+Flight::route('GET /orders/user/@user_id', function($user_id) {
+    Flight::json(Flight::orderService()->getByUserId($user_id));
+});
+
+
+Flight::route('POST /orders/custom', function() {
     $data = Flight::request()->data->getData();
-    Flight::json(Flight::orderService()->updateStatus($id, $data));
+    Flight::json(["custom_order_id" => Flight::orderService()->createCustomOrder($data)]);
 });
 
-Flight::route('DELETE /orders/@id', function($id) {
-    Flight::json(["deleted" => Flight::orderService()->deleteOrder($id)]);
+Flight::route('PATCH /orders/@order_id/status', function($order_id) {
+    $payload = Flight::request()->data->getData();
+    Flight::json(["updated" => Flight::orderService()->updateStatus($order_id, $payload["status"])]);
 });
 
+
+Flight::route('GET /orders/@order_id/details', function($order_id) {
+    Flight::json(Flight::orderService()->getOrderWithItems($order_id));
+});
 ?>

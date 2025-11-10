@@ -12,4 +12,13 @@ Flight::route('GET /order-items/@order_id', function($order_id) {
 Flight::route('DELETE /order-items/@order_id', function($order_id) {
     Flight::json(Flight::orderItemService()->deleteByOrder($order_id));
 });
+
+Flight::route('GET /order-items/@order_id', function($order_id) {
+    Flight::json(Flight::orderItemService()->getItemsByOrder($order_id));
+});
+
+Flight::route('GET /order-items', function() {
+    Flight::json(Flight::orderItemService()->getAllio());
+});
+
 ?>

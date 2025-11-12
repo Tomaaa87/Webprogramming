@@ -15,7 +15,7 @@
  *     @OA\Response(
  *         response=200,
  *         description="List of all custom orders"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */
@@ -37,7 +37,7 @@ Flight::route('GET /custom-orders', function() {
  *     @OA\Response(
  *         response=200,
  *         description="List of custom orders for user"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */
@@ -64,7 +64,7 @@ Flight::route('GET /custom-orders/user/@user_id', function($user_id) {
  *     @OA\Response(
  *         response=200,
  *         description="Custom order created successfully"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */

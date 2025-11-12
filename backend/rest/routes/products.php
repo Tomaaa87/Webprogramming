@@ -16,8 +16,8 @@
  *     @OA\Response(
  *         response=200,
  *         description="List of products"
- *     )
- *    @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('GET /products', function() {
@@ -39,8 +39,8 @@ Flight::route('GET /products', function() {
  *     @OA\Response(
  *         response=200,
  *         description="Products for selected category returned"
- *     )
- *    @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('GET /products/@id', function($id) {
@@ -67,8 +67,9 @@ Flight::route('GET /products/@id', function($id) {
  *     @OA\Response(
  *         response=200,
  *         description="Product added successfully"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
+ * )
  */
 Flight::route('POST /products', function() {
     $data = Flight::request()->data->getData();
@@ -97,10 +98,10 @@ Flight::route('POST /products', function() {
  *             @OA\Property(property="image_url", type="string", example="https://example.com/newimage.jpg")
  *         )
  *     ),
- *     @OA\Response(
+ *       @OA\Response(
  *         response=200,
- *         description="Product updated successfully"
- *     )
+ *         description="Product added successfully"
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */
@@ -124,8 +125,9 @@ Flight::route('PATCH /products/@id', function($id) {
  *     @OA\Response(
  *         response=200,
  *         description="Product deleted successfully"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
+ * )
  */
 Flight::route('DELETE /products/@id', function($id) {
     Flight::json(["deleted" => Flight::productService()->deleteProduct($id)]);
@@ -140,9 +142,9 @@ Flight::route('DELETE /products/@id', function($id) {
  *     @OA\Response(
  *         response=200,
  *         description="List of all products"
- *     )
- * )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
+ * )
  */
 Flight::route('GET /products/all', function() {
     Flight::json(Flight::productService()->getAllProducts());

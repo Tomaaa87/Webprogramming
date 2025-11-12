@@ -26,7 +26,7 @@
  *     @OA\Response(
  *         response=200,
  *         description="Order item added"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */
@@ -50,7 +50,7 @@ Flight::route('POST /order-items', function() {
  *     @OA\Response(
  *         response=200,
  *         description="Order items returned"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */
@@ -73,7 +73,7 @@ Flight::route('GET /order-items/@order_id', function($order_id) {
  *     @OA\Response(
  *         response=200,
  *         description="Detailed order items returned"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */
@@ -96,7 +96,7 @@ Flight::route('GET /order-items/details/@order_id', function($order_id) {
  *     @OA\Response(
  *         response=200,
  *         description="Order items deleted"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */
@@ -113,8 +113,8 @@ Flight::route('DELETE /order-items/@order_id', function($order_id) {
  *     @OA\Response(
  *         response=200,
  *         description="All order items"
- *     )
- *    @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('GET /order-items', function() {

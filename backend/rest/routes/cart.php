@@ -22,8 +22,8 @@
  *     @OA\Response(
  *         response=200,
  *         description="User cart data"
- *     )
- *      @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('GET /cart/@user_id', function($user_id) {
@@ -45,8 +45,8 @@ Flight::route('GET /cart/@user_id', function($user_id) {
  *     @OA\Response(
  *         response=200,
  *         description="Cart totals returned"
- *     )
- *   @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('GET /cart/total/@user_id', function($user_id) {
@@ -72,8 +72,8 @@ Flight::route('GET /cart/total/@user_id', function($user_id) {
  *     @OA\Response(
  *         response=200,
  *         description="Item inserted to cart"
- *     )
- *    @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('POST /cart', function() {
@@ -99,9 +99,9 @@ Flight::route('POST /cart', function() {
  *     @OA\Response(
  *         response=200,
  *         description="Cart updated successfully"
- *     )
- * 
+ *     ),
  *     @OA\Response(response=500, description="Server error")
+ * )
  */
 Flight::route('PUT /cart', function() {
     $data = Flight::request()->data->getData();
@@ -129,8 +129,8 @@ Flight::route('PUT /cart', function() {
  *     @OA\Response(
  *         response=200,
  *         description="Item removed from cart"
- *     )
- *    @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('DELETE /cart/item/@user_id/@product_id', function($user_id, $product_id) {
@@ -152,7 +152,7 @@ Flight::route('DELETE /cart/item/@user_id/@product_id', function($user_id, $prod
  *     @OA\Response(
  *         response=200,
  *         description="User cart cleared"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */

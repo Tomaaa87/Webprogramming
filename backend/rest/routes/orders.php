@@ -14,13 +14,14 @@
  *     @OA\Response(
  *         response=200,
  *         description="List of all orders"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
+ * )
  */
 Flight::route('GET /orders', function() {
     Flight::json(Flight::orderService()->getAllOrders());
 });
-/**
+/** 
  * @OA\Post(
  *     path="/orders",
  *     tags={"Orders"},
@@ -37,10 +38,11 @@ Flight::route('GET /orders', function() {
  *     @OA\Response(
  *         response=200,
  *         description="Order inserted successfully"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
  * )
  */
+
 
 Flight::route('POST /orders', function() {
     $data = Flight::request()->data->getData();
@@ -60,8 +62,8 @@ Flight::route('POST /orders', function() {
  *     @OA\Response(
  *         response=200,
  *         description="Orders returned"
- *     )
- *    @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 
@@ -88,8 +90,9 @@ Flight::route('GET /orders/user/@user_id', function($user_id) {
  *     @OA\Response(
  *         response=200,
  *         description="Custom order created successfully"
- *     )
+ *     ),
  *     @OA\Response(response=500, description="Server error")
+ * )
  */
 Flight::route('POST /orders/custom', function() {
     $data = Flight::request()->data->getData();
@@ -116,8 +119,8 @@ Flight::route('POST /orders/custom', function() {
  *     @OA\Response(
  *         response=200,
  *         description="Order status updated"
- *     )
- *    @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 
@@ -139,8 +142,8 @@ Flight::route('PATCH /orders/@order_id/status', function($order_id) {
  *     @OA\Response(
  *         response=200,
  *         description="Order details returned"
- *     )
- *    @OA\Response(response=500, description="Server error")
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 

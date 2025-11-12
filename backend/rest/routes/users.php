@@ -66,6 +66,7 @@ Flight::route('GET /users/email/@email', function($email) {
  *         response=200,
  *         description="User created successfully"
  *     )
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('POST /users', function() {
@@ -100,6 +101,7 @@ Flight::route('POST /users', function() {
  *         response=200,
  *         description="User updated successfully"
  *     )
+ *    @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('PUT /users/@id', function($id) {
@@ -123,6 +125,7 @@ Flight::route('PUT /users/@id', function($id) {
  *         response=200,
  *         description="User deleted successfully"
  *     )
+ *    @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('DELETE /users/@id', function($id) {

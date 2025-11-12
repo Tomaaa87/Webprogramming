@@ -10,7 +10,7 @@ class OrderDao extends BaseDao {
         parent::__construct("orders");
     }
 
-    /** ✅ uzima sve narudzbe*/
+    /** uzima sve narudzbe*/
     public function getAllOrders() {
         return $this->getAll();
     }

@@ -16,7 +16,7 @@ class CategoryDao extends BaseDao {
         return $this->getAll();
     }
 
-    /** 🔍 trazi kategorije gdje je ime slicno */
+    /**  trazi kategorije gdje je ime slicno */
     public function searchByName($name) {
         $like = "%" . $name . "%";
         return $this->query(
@@ -24,5 +24,22 @@ class CategoryDao extends BaseDao {
             ["name" => $like]
         );
     }
+    public function insertCategory($data) {
+        return $this->insert([
+            "category_name" => $data["category_name"],
+            "description"   => $data["description"]
+        ]);}
+    public function updateCategory($id, $data) {
+        return $this->update($id, [
+            "category_name" => $data["category_name"],
+            "description"   => $data["description"]
+        ]);
+    }
+    public function deleteCategory($id) {
+        return $this->delete($id);}
+
+    
 }
+
+
 ?>

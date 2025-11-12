@@ -17,6 +17,7 @@
  *         response=200,
  *         description="List of all categories"
  *     )
+ *    @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('GET /categories', function() {
@@ -40,6 +41,7 @@ Flight::route('GET /categories', function() {
  *         response=200,
  *         description="Filtered list of categories"
  *     )
+ *     @OA\Response(response=500, description="Server error")
  * )
  */
 Flight::route('GET /categories/search/@query', function($query) {

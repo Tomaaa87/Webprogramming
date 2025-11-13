@@ -34,6 +34,14 @@ class ProductDao extends BaseDao {
         ["likeTerm" => $likeTerm]
     );
 }
-
-}
+    public function addProduct($product) {
+        return $this->insert($product);
+     }
+    public function updateProduct($id, $product) {
+        return $this->update($id, $product);
+     }
+    public function deleteProduct($id) {
+        return $this->delete($id);
+     }
+    }
 ?>

@@ -13,6 +13,16 @@ class CustomOrderDao extends BaseDao {
     public function __construct() {
         parent::__construct("custom_orders");
     }
+   // Unosi novu custom narudžbu u bazu
+     public function insertCustomOrder($orderData) {
+
+        return $this->insert([
+            "order_id"        => $orderData["order_id"],
+            "title"           => $orderData["title"],
+            "estimated_price" => $orderData["estimated_price"],
+            "details"         => $orderData["details"]
+        ]);
+    }
 
     /**
      * Dohvaća sve custom narudžbe iz baze
@@ -39,12 +49,4 @@ class CustomOrderDao extends BaseDao {
         ", ["uid" => $userId]);
     }
 }
-    /**
-     * Unosi novu custom narudžbu u bazu
-     * 
-     * @param int $orderId - ID narudžbe (iz tablice orders)
-     * @param string $title - Naziv projekta / narudžbe
-     * @param string $details - Opis što korisnik želi
-     * @param float $estimated_price - Procijenjena cijena
-     * @param string $category - Kategor*
-*/
+    /**bili komentari oni za parametre(@param) greska*/

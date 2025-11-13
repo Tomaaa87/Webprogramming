@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `category_name` varchar(100) NOT NULL,
-  `description` text,
+  `description` text NOT NULL,
   `added_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `category_name` (`category_name`)
@@ -86,7 +86,7 @@ CREATE TABLE `custom_orders` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `order_id` int unsigned NOT NULL,
   `title` varchar(100) NOT NULL,
-  `details` text,
+  `details` text NOT NULL,
   `estimated_price` decimal(10,2) DEFAULT NULL,
   `category` varchar(100) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -178,10 +178,11 @@ CREATE TABLE `products` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `description` text,
-  `category_id` int DEFAULT NULL,
+  `description` text NOT NULL,
+  `category_id` int unsigned DEFAULT NULL,
   `image_url` varchar(255) DEFAULT NULL,
   `added_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `stock` bigint unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE
@@ -194,7 +195,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Pirelli P-Zero',330.00,'The best summer tire you can get.',1,'./assets/images/pirelli.webp','2025-10-30 09:48:53'),(2,'Continental SportContact 6',200.00,'Perfect balance of grip and comfort.',1,'./assets/images/continental.webp','2025-10-30 09:48:53'),(3,'KUMHO Ecsta PS71',150.00,'Affordable high-performance summer tire.',1,'./assets/images/kumho.webp','2025-10-30 09:48:53'),(4,'Turbocharger',1890.00,'Add power and performance.',2,'./assets/images/turbo.webp','2025-10-30 09:48:53'),(5,'Turbo Intake',985.00,'Increases air flow and engine response.',2,'./assets/images/intake.webp','2025-10-30 09:48:53'),(6,'Exhaust System',2750.00,'Deep tone and improved flow.',2,'./assets/images/exhaust.webp','2025-10-30 09:48:53'),(7,'Spoiler',750.00,'Carbon-fiber design for aerodynamic stability.',3,'./assets/images/spoiler.webp','2025-10-30 09:48:53'),(8,'Front Lip',450.00,'Enhances sporty front look.',3,'./assets/images/frontlip.webp','2025-10-30 09:48:53'),(9,'Rear Lip',750.00,'Stylish rear upgrade.',3,'./assets/images/rearlip.webp','2025-10-30 09:48:53');
+INSERT INTO `products` VALUES (1,'Pirelli P-Zero',330.00,'The best summer tire you can get.',1,'./assets/images/pirelli.webp','2025-10-30 09:48:53','200'),(2,'Continental SportContact 6',200.00,'Perfect balance of grip and comfort.',1,'./assets/images/continental.webp','2025-10-30 09:48:53','200'),(3,'KUMHO Ecsta PS71',150.00,'Affordable high-performance summer tire.',1,'./assets/images/kumho.webp','2025-10-30 09:48:53','200'),(4,'Turbocharger',1890.00,'Add power and performance.',2,'./assets/images/turbo.webp','2025-10-30 09:48:53','50'),(5,'Turbo Intake',985.00,'Increases air flow and engine response.',2,'./assets/images/intake.webp','2025-10-30 09:48:53','50'),(6,'Exhaust System',2750.00,'Deep tone and improved flow.',2,'./assets/images/exhaust.webp','2025-10-30 09:48:53','50'),(7,'Spoiler',750.00,'Carbon-fiber design for aerodynamic stability.',3,'./assets/images/spoiler.webp','2025-10-30 09:48:53','50'),(8,'Front Lip',450.00,'Enhances sporty front look.',3,'./assets/images/frontlip.webp','2025-10-30 09:48:53','50'),(9,'Rear Lip',750.00,'Stylish rear upgrade.',3,'./assets/images/rearlip.webp','2025-10-30 09:48:53','50');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 

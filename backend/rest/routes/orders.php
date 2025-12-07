@@ -25,6 +25,21 @@ Flight::route('GET /orders', function() {
     Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::orderService()->getAllOrders());
 });
+
+/**
+ * @OA\Get(
+ *     path="/orders/status/{status}",
+ *     tags={"Orders"},
+ *     summary="Get orders by status",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="status", in="path", required=true, @OA\Schema(type="string", example="Pending")),
+ *     @OA\Response(response=200, description="Orders filtered by status")
+ * )
+ */
+Flight::route('GET /orders/status/@status', function($status) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::orderService()->getByStatus($status));
+});
 /** 
  * @OA\Post(
  *     path="/orders",
@@ -169,6 +184,22 @@ Flight::route('GET /orders/@order_id/details', function($order_id) {
     
     Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::orderService()->getOrderWithItems($order_id));
+});
+
+/**
+ * @OA\Get(
+ *     path="/orders/recent",
+ *     tags={"Orders"},
+ *     summary="Get recent orders",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="limit", in="query", required=false, @OA\Schema(type="integer", example=10)),
+ *     @OA\Response(response=200, description="Recent orders returned")
+ * )
+ */
+Flight::route('GET /orders/recent', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    $limit = (int)(Flight::request()->query['limit'] ?? 10);
+    Flight::json(Flight::orderService()->getRecentOrders($limit));
 });
 
 /**

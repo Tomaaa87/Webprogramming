@@ -29,6 +29,22 @@ Flight::route('GET /custom-orders', function() {
 
 /**
  * @OA\Get(
+ *     path="/custom-orders/{id}",
+ *     tags={"Custom Orders"},
+ *     summary="Get a custom order by ID",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer", example=15)),
+ *     @OA\Response(response=200, description="Custom order returned"),
+ *     @OA\Response(response=404, description="Custom order not found")
+ * )
+ */
+Flight::route('GET /custom-orders/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::customOrderService()->getCustomOrderById($id));
+});
+
+/**
+ * @OA\Get(
  *     path="/custom-orders/user/{user_id}",
  *     tags={"Custom Orders"},
  *     summary="Get custom orders for a specific user",
@@ -81,6 +97,47 @@ Flight::route('POST /custom-orders', function() {
     Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::customOrderService()->insertCustomOrder($data));
+});
+
+/**
+ * @OA\Put(
+ *     path="/custom-orders/{id}",
+ *     tags={"Custom Orders"},
+ *     summary="Update a custom order",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer", example=16)),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             @OA\Property(property="title", type="string"),
+ *             @OA\Property(property="details", type="string"),
+ *             @OA\Property(property="estimated_price", type="number")
+ *         )
+ *     ),
+ *     @OA\Response(response=200, description="Custom order updated")
+ * )
+ */
+Flight::route('PUT /custom-orders/@id', function($id) {
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    $data = Flight::request()->data->getData();
+    Flight::json(Flight::customOrderService()->updateCustomOrder($id, $data));
+});
+
+/**
+ * @OA\Patch(
+ *     path="/custom-orders/{id}/status",
+ *     tags={"Custom Orders"},
+ *     summary="Update linked order status by custom order id",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer", example=16)),
+ *     @OA\RequestBody(required=true, @OA\JsonContent(required={"status"}, @OA\Property(property="status", type="string", example="Processing"))),
+ *     @OA\Response(response=200, description="Status updated")
+ * )
+ */
+Flight::route('PATCH /custom-orders/@id/status', function($id) {
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    $payload = Flight::request()->data->getData();
+    Flight::json(["updated" => Flight::customOrderService()->updateStatusByCustomOrderId($id, $payload["status"])]);
 });
 
 /**

@@ -29,6 +29,9 @@ class CustomOrderDao extends BaseDao {
     public function getAllCustomOrders() {
         return $this->getAll();
     }
+    public function getCustomOrderById($id) {
+        return parent::getById($id);
+    }
 
  
     public function getByUserId($userId) {
@@ -43,6 +46,13 @@ class CustomOrderDao extends BaseDao {
     
     public function deleteCustomOrder($orderId) {
         return $this->delete($orderId);
+    }
+    public function updateCustomOrder($id, $data) {
+        return $this->update([
+            "title" => $data["title"] ?? null,
+            "estimated_price" => $data["estimated_price"] ?? null,
+            "details" => $data["details"] ?? null
+        ], $id);
     }
 }
     /**bili komentari oni za parametre(@param) greska*/

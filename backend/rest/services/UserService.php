@@ -87,6 +87,20 @@ class UserService extends BaseService {
     public function getAllUsers() {
         return $this->dao->getAllUsers();
     }
+
+    public function getById($id) {
+        return $this->dao->getById($id);
+    }
+
+    public function getUsersByRole($role) {
+        $role = strtolower(trim($role));
+        if (!in_array($role, ['admin', 'user'])) { throw new Exception("Role must be 'admin' or 'user'."); }
+        return $this->dao->getUsersByRole($role);
+    }
+
+    public function searchUsers($term) {
+        return $this->dao->searchUsers($term);
+    }
 }
 
 ?>

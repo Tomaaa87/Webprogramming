@@ -54,6 +54,52 @@ Flight::route('GET /products/@id', function($id) {
     Flight::json(Flight::productService()->getByCategory($id));
 });
 
+/**
+ * @OA\Get(
+ *     path="/product/{id}",
+ *     tags={"Products"},
+ *     summary="Get a product by ID",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer", example=4)),
+ *     @OA\Response(response=200, description="Product returned")
+ * )
+ */
+Flight::route('GET /product/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::productService()->getProductById($id));
+});
+
+/**
+ * @OA\Get(
+ *     path="/products/in-stock",
+ *     tags={"Products"},
+ *     summary="Get all products with stock > 0",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Response(response=200, description="Products in stock returned")
+ * )
+ */
+Flight::route('GET /products/in-stock', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::productService()->getProductsInStock());
+});
+
+/**
+ * @OA\Patch(
+ *     path="/products/{id}/stock",
+ *     tags={"Products"},
+ *     summary="Update product stock quantity",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer", example=4)),
+ *     @OA\RequestBody(required=true, @OA\JsonContent(required={"stock"}, @OA\Property(property="stock", type="integer", example=75))),
+ *     @OA\Response(response=200, description="Stock updated")
+ * )
+ */
+Flight::route('PATCH /products/@id/stock', function($id) {
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    $payload = Flight::request()->data->getData();
+    Flight::json(Flight::productService()->updateStock($id, (int)$payload['stock']));
+});
+
 
 /**
  * @OA\Post(

@@ -14,6 +14,9 @@ class ProductDao extends BaseDao {
     public function getAllProducts() {
         return $this->getAll();
     }
+    public function getProductById($id) {
+        return $this->getById($id);
+    }
 
     /**svi produkti po category id */
    public function getByCategory($categoryId) {
@@ -40,6 +43,12 @@ class ProductDao extends BaseDao {
     public function updateProduct($id, $product) {
         return $this->update($product, $id);
      }
+    public function getProductsInStock() {
+        return $this->query("SELECT * FROM products WHERE stock > 0 ORDER BY added_at DESC");
+    }
+    public function updateStock($id, $stock) {
+        return $this->update(["stock" => $stock], $id);
+    }
     public function deleteProduct($id) {
         return $this->delete($id);
      }

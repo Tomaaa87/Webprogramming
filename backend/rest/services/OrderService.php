@@ -14,6 +14,9 @@ class OrderService extends BaseService {
     public function getAllOrders() {
         return $this->dao->getAllOrders();
     }   
+    public function getOrderById($id) {
+        return $this->dao->getOrderById($id);
+    }
     
     public function insertOrder($data) {
              // Validacija ukupnog iznosa narudžbe
@@ -59,6 +62,12 @@ class OrderService extends BaseService {
         }
 
         return $this->dao->update(["status" => $status], $orderId);
+    }
+    public function getByStatus($status) {
+        return $this->dao->getByStatus($status);
+    }
+    public function getRecentOrders($limit = 10) {
+        return $this->dao->getRecentOrders($limit);
     }
     
     public function getOrderWithItems($orderId) {

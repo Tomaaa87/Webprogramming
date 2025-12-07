@@ -28,6 +28,32 @@ Flight::route('GET /categories', function() {
     Flight::json(Flight::categoryService()->getAllCategories());
 });
 
+/**
+ * @OA\Get(
+ *     path="/categories/{id}",
+ *     tags={"Categories"},
+ *     summary="Get category by ID",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer", example=1),
+ *         description="Category ID"
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Single category object"
+ *     ),
+ *     @OA\Response(response=404, description="Category not found"),
+ *     @OA\Response(response=500, description="Server error")
+ * )
+ */
+Flight::route('GET /categories/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::categoryService()->getCategoryById($id));
+});
+
 
 /**
  * @OA\Get(

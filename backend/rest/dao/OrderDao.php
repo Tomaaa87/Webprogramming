@@ -14,6 +14,9 @@ class OrderDao extends BaseDao {
     public function getAllOrders() {
         return $this->getAll();
     }
+    public function getOrderById($id) {
+        return $this->getById($id);
+    }
      public function insertOrder($data) {
         return $this->add([
             "user_id"      => $data["user_id"],
@@ -41,6 +44,12 @@ class OrderDao extends BaseDao {
     /** status postojeceg ordera */
     public function updateStatus($orderId, $status) {
         return $this->update(["status" => $status], $orderId);
+    }
+    public function getByStatus($status) {
+        return $this->query("SELECT * FROM orders WHERE status = :status ORDER BY created_at DESC", ["status" => $status]);
+    }
+    public function getRecentOrders($limit = 10) {
+        return $this->query("SELECT * FROM orders ORDER BY created_at DESC LIMIT :lim", ["lim" => $limit]);
     }
      public function getOrderWithItems($orderId) {
         return $this->query("

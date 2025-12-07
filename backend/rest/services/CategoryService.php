@@ -17,6 +17,10 @@ class CategoryService extends BaseService {
     public function getAllCategories() {
         return $this->dao->getAllCategories();
     }
+
+    public function getCategoryById($id) {
+        return $this->dao->getCategoryById($id);
+    }
     
     public function insertCategory($data) {
         // duzina imena kategorije bar 3 slova

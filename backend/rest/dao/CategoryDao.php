@@ -16,6 +16,11 @@ class CategoryDao extends BaseDao {
         return $this->getAll();
     }
 
+    /** pojedinacna kategorija po id */
+    public function getCategoryById($id) {
+        return $this->getById($id);
+    }
+
     /**  trazi kategorije gdje je ime slicno */
     public function searchByName($name) {
         $like = "%" . $name . "%";

@@ -1,16 +1,18 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 /**
  * @OA\Tag(
  *     name="Orders",
  *     description="Order management endpoints"
  * )
- */
-
-/**
+* 
+ * @OA@Post(
+*
  * @OA\Get(
  *     path="/orders",
  *     tags={"Orders"},
  *     summary="Get all orders",
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="List of all orders"
@@ -19,6 +21,8 @@
  * )
  */
 Flight::route('GET /orders', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::orderService()->getAllOrders());
 });
 /** 
@@ -26,6 +30,7 @@ Flight::route('GET /orders', function() {
  *     path="/orders",
  *     tags={"Orders"},
  *     summary="Insert new order",
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -45,6 +50,8 @@ Flight::route('GET /orders', function() {
 
 
 Flight::route('POST /orders', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(["order_id" => Flight::orderService()->insertOrder($data)]);
 });
@@ -53,6 +60,7 @@ Flight::route('POST /orders', function() {
  *     path="/orders/user/{user_id}",
  *     tags={"Orders"},
  *     summary="Get all orders for a specific user",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="user_id",
  *         in="path",
@@ -68,6 +76,8 @@ Flight::route('POST /orders', function() {
  */
 
 Flight::route('GET /orders/user/@user_id', function($user_id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::orderService()->getByUserId($user_id));
 });
 
@@ -76,6 +86,7 @@ Flight::route('GET /orders/user/@user_id', function($user_id) {
  *     path="/orders/custom",
  *     tags={"Orders"},
  *     summary="Create a custom order",
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -95,6 +106,8 @@ Flight::route('GET /orders/user/@user_id', function($user_id) {
  * )
  */
 Flight::route('POST /orders/custom', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(["custom_order_id" => Flight::orderService()->createCustomOrder($data)]);
 });
@@ -103,6 +116,7 @@ Flight::route('POST /orders/custom', function() {
  *     path="/orders/{order_id}/status",
  *     tags={"Orders"},
  *     summary="Update an order status",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="order_id",
  *         in="path",
@@ -125,6 +139,8 @@ Flight::route('POST /orders/custom', function() {
  */
 
 Flight::route('PATCH /orders/@order_id/status', function($order_id) {
+    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $payload = Flight::request()->data->getData();
     Flight::json(["updated" => Flight::orderService()->updateStatus($order_id, $payload["status"])]);
 });
@@ -133,6 +149,7 @@ Flight::route('PATCH /orders/@order_id/status', function($order_id) {
  *     path="/orders/{order_id}/details",
  *     tags={"Orders"},
  *     summary="Get an order including its items",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="order_id",
  *         in="path",
@@ -149,6 +166,33 @@ Flight::route('PATCH /orders/@order_id/status', function($order_id) {
 
 
 Flight::route('GET /orders/@order_id/details', function($order_id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::orderService()->getOrderWithItems($order_id));
+});
+
+/**
+ * @OA\Delete(
+ *     path="/orders/{id}",
+ *     tags={"Orders"},
+ *     summary="Delete an order by ID",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer", example=13)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Order deleted successfully"
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
+ * )
+ */
+Flight::route('DELETE /orders/@id', function($id) {
+    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    Flight::json(["deleted" => Flight::orderService()->deleteOrder($id)]);
 });
 ?>

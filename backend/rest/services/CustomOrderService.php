@@ -23,7 +23,8 @@ class CustomOrderService extends BaseService {
             throw new Exception("Custom order details must be at least 20 characters long.");
         }
 
-        return $this->create($orderData);
+        // Persist into custom_orders via DAO
+        return $this->dao->insertCustomOrder($orderData);
     }
 
     public function getAllCustomOrders() {
@@ -32,6 +33,10 @@ class CustomOrderService extends BaseService {
 
     public function getByUserId($id) {
         return $this->dao->getByUserId($id);
+    }
+
+    public function deleteCustomOrder($id) {
+        return $this->dao->deleteCustomOrder($id);
     }
 }
 

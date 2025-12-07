@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 
 /**
  * @OA\Tag(
@@ -12,6 +13,7 @@
  *     path="/custom-orders",
  *     tags={"Custom Orders"},
  *     summary="Get all custom orders",
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="List of all custom orders"
@@ -20,6 +22,8 @@
  * )
  */
 Flight::route('GET /custom-orders', function() {
+    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::customOrderService()->getAllCustomOrders());
 });
 
@@ -28,6 +32,7 @@ Flight::route('GET /custom-orders', function() {
  *     path="/custom-orders/user/{user_id}",
  *     tags={"Custom Orders"},
  *     summary="Get custom orders for a specific user",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="user_id",
  *         in="path",
@@ -42,6 +47,8 @@ Flight::route('GET /custom-orders', function() {
  * )
  */
 Flight::route('GET /custom-orders/user/@user_id', function($user_id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::customOrderService()->getByUserId($user_id));
 });
 
@@ -50,6 +57,7 @@ Flight::route('GET /custom-orders/user/@user_id', function($user_id) {
  *     path="/custom-orders",
  *     tags={"Custom Orders"},
  *     summary="Create a custom order request",
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -69,8 +77,35 @@ Flight::route('GET /custom-orders/user/@user_id', function($user_id) {
  * )
  */
 Flight::route('POST /custom-orders', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::customOrderService()->insertCustomOrder($data));
+});
+
+/**
+ * @OA\Delete(
+ *     path="/custom-orders/{id}",
+ *     tags={"Custom Orders"},
+ *     summary="Delete a custom order by ID",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer", example=16)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Custom order deleted successfully"
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
+ * )
+ */
+Flight::route('DELETE /custom-orders/@id', function($id) {
+    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    Flight::json(["deleted" => Flight::customOrderService()->deleteCustomOrder($id)]);
 });
 
 ?>

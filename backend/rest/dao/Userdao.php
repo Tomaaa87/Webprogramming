@@ -9,7 +9,7 @@ class UserDao extends BaseDao {
 
     
     public function insertUser($data) {
-        return $this->insert($data);
+        return $this->add($data);
     }
 
 
@@ -27,7 +27,7 @@ class UserDao extends BaseDao {
 
 
     public function updateUser($id, $data) {
-        return $this->update($id, $data);
+        return $this->update($data, $id);
     }
 
     public function getAllUsers() {

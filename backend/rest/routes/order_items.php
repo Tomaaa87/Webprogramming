@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 
 /**
  * @OA\Tag(
@@ -10,6 +11,7 @@
 
 /**
  * @OA\Post(
+ *     security={{"ApiKey": {}}},
  *     path="/order-items",
  *     tags={"Order Items"},
  *     summary="Add item to an order",
@@ -31,6 +33,8 @@
  * )
  */
 Flight::route('POST /order-items', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::orderItemService()->addItem($data));
 });
@@ -41,6 +45,7 @@ Flight::route('POST /order-items', function() {
  *     path="/order-items/{order_id}",
  *     tags={"Order Items"},
  *     summary="Get order summary (basic item info)",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="order_id",
  *         in="path",
@@ -55,6 +60,8 @@ Flight::route('POST /order-items', function() {
  * )
  */
 Flight::route('GET /order-items/@order_id', function($order_id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::orderItemService()->getByOrderId($order_id));
 });
 
@@ -64,6 +71,7 @@ Flight::route('GET /order-items/@order_id', function($order_id) {
  *     path="/order-items/details/{order_id}",
  *     tags={"Order Items"},
  *     summary="Get detailed items info for an order",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="order_id",
  *         in="path",
@@ -78,6 +86,8 @@ Flight::route('GET /order-items/@order_id', function($order_id) {
  * )
  */
 Flight::route('GET /order-items/details/@order_id', function($order_id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::orderItemService()->getItemsByOrder($order_id));
 });
 
@@ -87,6 +97,7 @@ Flight::route('GET /order-items/details/@order_id', function($order_id) {
  *     path="/order-items/{order_id}",
  *     tags={"Order Items"},
  *     summary="Delete all items for an order",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="order_id",
  *         in="path",
@@ -101,6 +112,8 @@ Flight::route('GET /order-items/details/@order_id', function($order_id) {
  * )
  */
 Flight::route('DELETE /order-items/@order_id', function($order_id) {
+    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::orderItemService()->deleteByOrder($order_id));
 });
 
@@ -110,6 +123,7 @@ Flight::route('DELETE /order-items/@order_id', function($order_id) {
  *     path="/order-items",
  *     tags={"Order Items"},
  *     summary="Get all order items",
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="All order items"
@@ -118,6 +132,8 @@ Flight::route('DELETE /order-items/@order_id', function($order_id) {
  * )
  */
 Flight::route('GET /order-items', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::orderItemService()->getAllio());
 });
 

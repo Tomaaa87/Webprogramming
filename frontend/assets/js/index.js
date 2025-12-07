@@ -136,5 +136,13 @@ app.route({
            console.log("About page ready!");
     }
 });
+app.route({
+    view: "admin",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/admin.css');
+           console.log("About page ready!");
+    }
+});
 app.run();
 

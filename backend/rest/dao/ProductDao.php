@@ -12,7 +12,7 @@ class ProductDao extends BaseDao {
 
     /** uzima sve proizvode */
     public function getAllProducts() {
-        return $this->get_all();
+        return $this->getAll();
     }
 
     /**svi produkti po category id */
@@ -35,10 +35,10 @@ class ProductDao extends BaseDao {
     );
 }
     public function addProduct($product) {
-        return $this->insert($product);
+        return $this->add($product);
      }
     public function updateProduct($id, $product) {
-        return $this->update($id, $product);
+        return $this->update($product, $id);
      }
     public function deleteProduct($id) {
         return $this->delete($id);

@@ -53,6 +53,19 @@ class ProductService extends BaseService {
         return $this->dao->getByCategory($categoryId);
     }
 
+    public function getProductById($id) {
+        return $this->dao->getProductById($id);
+    }
+
+    public function getProductsInStock() {
+        return $this->dao->getProductsInStock();
+    }
+
+    public function updateStock($id, $stock) {
+        if ($stock < 0) { throw new Exception("Product stock cannot be negative."); }
+        return $this->dao->updateStock($id, $stock);
+    }
+
     public function deleteProduct($id) {
         return $this->dao->deleteProduct($id);
     }

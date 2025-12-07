@@ -29,7 +29,21 @@ class UserService extends BaseService {
                 throw new Exception("Invalid phone number format.");
             }
         }
+
+        // rola je obavezna i može biti samo 'admin' ili 'user'
+        if (!isset($user['role']) || empty($user['role'])) {
+            throw new Exception("Role is required and must be 'admin' or 'user'.");
+        }
+        $user['role'] = strtolower(trim($user['role']));
+        if (!in_array($user['role'], ['admin', 'user'])) {
+            throw new Exception("Role must be 'admin' or 'user'.");
+        }
         
+        // hash lozinke ako je dostavljena
+        if (isset($user['password']) && !empty($user['password'])) {
+            $user['password'] = password_hash($user['password'], PASSWORD_BCRYPT);
+        }
+
         return $this->dao->insertUser($user);
     }
 
@@ -58,6 +72,11 @@ class UserService extends BaseService {
             }
         }
 
+        // ako se mijenja lozinka, obavezno je hashati
+        if (isset($data['password']) && !empty($data['password'])) {
+            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        }
+
         return $this->dao->updateUser($id, $data);
     }
 
@@ -67,6 +86,20 @@ class UserService extends BaseService {
     
     public function getAllUsers() {
         return $this->dao->getAllUsers();
+    }
+
+    public function getById($id) {
+        return $this->dao->getById($id);
+    }
+
+    public function getUsersByRole($role) {
+        $role = strtolower(trim($role));
+        if (!in_array($role, ['admin', 'user'])) { throw new Exception("Role must be 'admin' or 'user'."); }
+        return $this->dao->getUsersByRole($role);
+    }
+
+    public function searchUsers($term) {
+        return $this->dao->searchUsers($term);
     }
 }
 

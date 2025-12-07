@@ -85,6 +85,7 @@ DROP TABLE IF EXISTS `custom_orders`;
 CREATE TABLE `custom_orders` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `order_id` int unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
   `title` varchar(100) NOT NULL,
   `details` text NOT NULL,
   `estimated_price` decimal(10,2) DEFAULT NULL,
@@ -92,7 +93,9 @@ CREATE TABLE `custom_orders` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
-  CONSTRAINT `custom_orders_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `custom_orders_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `custom_orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -102,7 +105,11 @@ CREATE TABLE `custom_orders` (
 
 LOCK TABLES `custom_orders` WRITE;
 /*!40000 ALTER TABLE `custom_orders` DISABLE KEYS */;
-INSERT INTO `custom_orders` VALUES (13,9,'2.5 TFSI DAZA Engine Retrofit (Golf 7R)','Requesting a 2.5 TFSI DAZA engine retrofit into Golf 7R. Includes wiring harness, ECU adaptation, custom mounts, and full mechanical integration.',9800.00,'Performance Upgrades','2025-10-30 10:20:20'),(14,10,'Full Air Suspension Install (Tank + Compressor)','Full air suspension install with air management system, compressor, and tank integration. Includes installation and calibration for comfort and stance modes.',5200.00,'Suspension','2025-10-30 10:20:20'),(15,11,'Stage 2 Turbo Upgrade + Intercooler Kit','Complete Stage 2 turbo upgrade with intercooler kit. Includes forged internals, upgraded injectors, remap, and dyno tuning.',7400.00,'Performance Upgrades','2025-10-30 10:20:20'),(16,12,'Widebody Kit Install + Paint Match','Widebody kit installation with professional paint matching. Includes bumper extensions, fenders, side skirts, and paint blending for OEM finish.',8700.00,'Exterior','2025-10-30 10:20:20');
+INSERT INTO `custom_orders` (`id`,`order_id`,`user_id`,`title`,`details`,`estimated_price`,`category`,`created_at`) VALUES 
+(13,9,7,'2.5 TFSI DAZA Engine Retrofit (Golf 7R)','Requesting a 2.5 TFSI DAZA engine retrofit into Golf 7R. Includes wiring harness, ECU adaptation, custom mounts, and full mechanical integration.',9800.00,'Performance Upgrades','2025-10-30 10:20:20'),
+(14,10,8,'Full Air Suspension Install (Tank + Compressor)','Full air suspension install with air management system, compressor, and tank integration. Includes installation and calibration for comfort and stance modes.',5200.00,'Suspension','2025-10-30 10:20:20'),
+(15,11,9,'Stage 2 Turbo Upgrade + Intercooler Kit','Complete Stage 2 turbo upgrade with intercooler kit. Includes forged internals, upgraded injectors, remap, and dyno tuning.',7400.00,'Performance Upgrades','2025-10-30 10:20:20'),
+(16,12,10,'Widebody Kit Install + Paint Match','Widebody kit installation with professional paint matching. Includes bumper extensions, fenders, side skirts, and paint blending for OEM finish.',8700.00,'Exterior','2025-10-30 10:20:20');
 /*!40000 ALTER TABLE `custom_orders` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 
 /**
  * @OA\Tag(
@@ -13,6 +14,7 @@
  *     path="/products",
  *     tags={"Products"},
  *     summary="Search products (empty string returns all)",
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="List of products"
@@ -21,6 +23,8 @@
  * )
  */
 Flight::route('GET /products', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::productService()->search(""));
 });
 
@@ -30,6 +34,7 @@ Flight::route('GET /products', function() {
  *     path="/products/{id}",
  *     tags={"Products"},
  *     summary="Get products by category",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -44,7 +49,55 @@ Flight::route('GET /products', function() {
  * )
  */
 Flight::route('GET /products/@id', function($id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::productService()->getByCategory($id));
+});
+
+/**
+ * @OA\Get(
+ *     path="/product/{id}",
+ *     tags={"Products"},
+ *     summary="Get a product by ID",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer", example=4)),
+ *     @OA\Response(response=200, description="Product returned")
+ * )
+ */
+Flight::route('GET /product/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::productService()->getProductById($id));
+});
+
+/**
+ * @OA\Get(
+ *     path="/products/in-stock",
+ *     tags={"Products"},
+ *     summary="Get all products with stock > 0",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Response(response=200, description="Products in stock returned")
+ * )
+ */
+Flight::route('GET /products/in-stock', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::productService()->getProductsInStock());
+});
+
+/**
+ * @OA\Patch(
+ *     path="/products/{id}/stock",
+ *     tags={"Products"},
+ *     summary="Update product stock quantity",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer", example=4)),
+ *     @OA\RequestBody(required=true, @OA\JsonContent(required={"stock"}, @OA\Property(property="stock", type="integer", example=75))),
+ *     @OA\Response(response=200, description="Stock updated")
+ * )
+ */
+Flight::route('PATCH /products/@id/stock', function($id) {
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    $payload = Flight::request()->data->getData();
+    Flight::json(Flight::productService()->updateStock($id, (int)$payload['stock']));
 });
 
 
@@ -53,6 +106,7 @@ Flight::route('GET /products/@id', function($id) {
  *     path="/products",
  *     tags={"Products"},
  *     summary="Add a new product",
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -72,6 +126,8 @@ Flight::route('GET /products/@id', function($id) {
  * )
  */
 Flight::route('POST /products', function() {
+    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::productService()->addProduct($data));
 });
@@ -82,6 +138,7 @@ Flight::route('POST /products', function() {
  *     path="/products/{id}",
  *     tags={"Products"},
  *     summary="Update an existing product",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -106,6 +163,8 @@ Flight::route('POST /products', function() {
  * )
  */
 Flight::route('PATCH /products/@id', function($id) {
+    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::productService()->updateProduct($id, $data));
 });
@@ -116,6 +175,7 @@ Flight::route('PATCH /products/@id', function($id) {
  *     path="/products/{id}",
  *     tags={"Products"},
  *     summary="Delete a product by ID",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -130,6 +190,8 @@ Flight::route('PATCH /products/@id', function($id) {
  * )
  */
 Flight::route('DELETE /products/@id', function($id) {
+    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(["deleted" => Flight::productService()->deleteProduct($id)]);
 });
 
@@ -139,6 +201,7 @@ Flight::route('DELETE /products/@id', function($id) {
  *     path="/products/all",
  *     tags={"Products"},
  *     summary="Get ALL products (no filtering)",
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="List of all products"
@@ -147,6 +210,8 @@ Flight::route('DELETE /products/@id', function($id) {
  * )
  */
 Flight::route('GET /products/all', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::productService()->getAllProducts());
 });
 

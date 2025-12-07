@@ -136,5 +136,71 @@ app.route({
            console.log("About page ready!");
     }
 });
+app.route({
+    view: "admin",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/admin.css');
+           console.log("About page ready!");
+    }
+});
+app.route({
+    view: "adminUser",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/admin.css');
+           console.log("About page ready!");
+    }
+
+});
+app.route({
+    view: "adminProducts",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/admin.css');
+           console.log("About page ready!");
+    }
+});
+app.route({
+    view: "adminOrder",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/admin.css');
+           console.log("About page ready!");
+    }
+});
+app.route({
+    view: "adminOrderItem",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/admin.css');
+           console.log("About page ready!");
+    }
+});
+app.route({
+    view: "adminCustomOrder",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/admin.css');
+           console.log("About page ready!");
+    }
+});
+app.route({
+    view: "adminCategory",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/admin.css');
+           console.log("About page ready!");
+    }
+});
+app.route({
+    view: "adminCart",
+    onReady: function() {
+        console.log("About page created!");
+        loadCSS('./assets/css/admin.css');
+           console.log("About page ready!");
+    }
+});
+
 app.run();
 

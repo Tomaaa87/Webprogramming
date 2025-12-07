@@ -10,11 +10,16 @@ class CategoryService extends BaseService {
     }
     
     public function searchByName($name) {
-        return $this->dao->getByName($name);
+        // Delegate to DAO searchByName
+        return $this->dao->searchByName($name);
     }
     
     public function getAllCategories() {
         return $this->dao->getAllCategories();
+    }
+
+    public function getCategoryById($id) {
+        return $this->dao->getCategoryById($id);
     }
     
     public function insertCategory($data) {

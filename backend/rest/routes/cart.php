@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 
 /**
  * @OA\Tag(
@@ -13,6 +14,7 @@
  *     path="/cart/{user_id}",
  *     tags={"Cart"},
  *     summary="Get cart items for a user",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="user_id",
  *         in="path",
@@ -27,6 +29,8 @@
  * )
  */
 Flight::route('GET /cart/@user_id', function($user_id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::cartService()->getCartByUser($user_id));
 });
 
@@ -36,6 +40,7 @@ Flight::route('GET /cart/@user_id', function($user_id) {
  *     path="/cart/total/{user_id}",
  *     tags={"Cart"},
  *     summary="Get total price and item count for a user cart",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="user_id",
  *         in="path",
@@ -50,6 +55,8 @@ Flight::route('GET /cart/@user_id', function($user_id) {
  * )
  */
 Flight::route('GET /cart/total/@user_id', function($user_id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::cartService()->getCartTotals($user_id));
 });
 
@@ -59,6 +66,7 @@ Flight::route('GET /cart/total/@user_id', function($user_id) {
  *     path="/cart",
  *     tags={"Cart"},
  *     summary="Insert item to cart",
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -77,6 +85,8 @@ Flight::route('GET /cart/total/@user_id', function($user_id) {
  * )
  */
 Flight::route('POST /cart', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::cartService()->insertToCart($data));
 });
@@ -87,6 +97,7 @@ Flight::route('POST /cart', function() {
  *     path="/cart",
  *     tags={"Cart"},
  *     summary="Update cart item quantity",
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -104,6 +115,8 @@ Flight::route('POST /cart', function() {
  * )
  */
 Flight::route('PUT /cart', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $data = Flight::request()->data->getData();
     Flight::json(Flight::cartService()->updateQuantity($data));
 });
@@ -114,6 +127,7 @@ Flight::route('PUT /cart', function() {
  *     path="/cart/item/{user_id}/{product_id}",
  *     tags={"Cart"},
  *     summary="Delete a single item from cart",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="user_id",
  *         in="path",
@@ -134,6 +148,8 @@ Flight::route('PUT /cart', function() {
  * )
  */
 Flight::route('DELETE /cart/item/@user_id/@product_id', function($user_id, $product_id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::cartService()->deleteFromCart($user_id, $product_id));
 });
 
@@ -143,6 +159,7 @@ Flight::route('DELETE /cart/item/@user_id/@product_id', function($user_id, $prod
  *     path="/cart/{user_id}",
  *     tags={"Cart"},
  *     summary="Clear entire user cart",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="user_id",
  *         in="path",
@@ -157,6 +174,8 @@ Flight::route('DELETE /cart/item/@user_id/@product_id', function($user_id, $prod
  * )
  */
 Flight::route('DELETE /cart/@user_id', function($user_id) {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::cartService()->clearCart($user_id));
 });
 

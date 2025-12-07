@@ -29,7 +29,7 @@ class CartDao extends BaseDao {
         }
 
         // apdejt ako vec postoji
-        $updated = $this->query_execute("
+        $updated = $this->execute_query("
             UPDATE cart
             SET quantity = quantity + :q, unit_price = :p
             WHERE user_id = :uid AND product_id = :pid
@@ -48,7 +48,7 @@ class CartDao extends BaseDao {
                 "quantity" => $qty,
                 "unit_price" => $unitPrice
             ];
-            return $this->insert($data);
+            return $this->add($data); 
         }
 
         // vraca id postojeceg produkta u korpi
@@ -81,14 +81,30 @@ class CartDao extends BaseDao {
         return $this->update(["quantity" => $newQty], $cartId);
     }
 
+    // Update by composite keys to match route payload
+    public function updateByUserProduct($userId, $productId, $newQty) {
+        return $this->execute_query(
+            "UPDATE cart SET quantity = :q WHERE user_id = :uid AND product_id = :pid",
+            ["q" => $newQty, "uid" => $userId, "pid" => $productId]
+        );
+    }
+
     /** brise jedan item iz karta  */
     public function deleteFromCart($cartId) {
         return $this->delete($cartId);
     }
 
+    // Delete by composite keys to match route
+    public function deleteByUserProduct($userId, $productId) {
+        return $this->execute_query(
+            "DELETE FROM cart WHERE user_id = :uid AND product_id = :pid",
+            ["uid" => $userId, "pid" => $productId]
+        );
+    }
+
     /** Briše sve produkte iz korpe za korisnika  */
     public function clearCart($userId) {
-        return $this->query_execute(
+        return $this->execute_query(
             "DELETE FROM cart WHERE user_id = :uid",
             ["uid" => $userId]
         );
@@ -96,7 +112,7 @@ class CartDao extends BaseDao {
 
     /**sveukupne produkte i ukupna cijena u korpi */
     public function getCartTotals($userId) {
-        $result = $this->query("
+        $result = $this->query_unique("
             SELECT 
                 COALESCE(SUM(quantity), 0) AS items_count,
                 COALESCE(SUM(quantity * unit_price), 0) AS grand_total
@@ -104,7 +120,11 @@ class CartDao extends BaseDao {
             WHERE user_id = :uid
         ", ["uid" => $userId]);
 
-        return $result ? $result[0] : ["items_count" => 0, "grand_total" => 0];
+        // Ensure that if the cart is empty, we return zeros instead of nulls
+        return [
+            "items_count" => $result["items_count"] ?? 0,
+            "grand_total" => $result["grand_total"] ?? 0.00
+        ];
     }
 }
 ?>

@@ -14,12 +14,8 @@ class OrderItemService {
             throw new Exception("order_id i price su obavezni.");
         }
 
-        return $this->dao->addItem([
-            "order_id" => $orderId,
-            "product_id" => $productId,
-            "quantity" => $quantity,
-            "price" => $price
-        ]);
+        // Align with DAO signature: pass discrete params
+        return $this->dao->addItem($orderId, $productId, $quantity, $price);
     }
 
     public function getByOrderId($id) {

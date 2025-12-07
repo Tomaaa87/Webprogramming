@@ -14,8 +14,11 @@ class OrderDao extends BaseDao {
     public function getAllOrders() {
         return $this->getAll();
     }
+    public function getOrderById($id) {
+        return $this->getById($id);
+    }
      public function insertOrder($data) {
-        return $this->insert([
+        return $this->add([
             "user_id"      => $data["user_id"],
             "status"       => $data["status"],
             "total_amount" => $data["total_amount"]
@@ -25,30 +28,35 @@ class OrderDao extends BaseDao {
     /** sve narudzbe po korisnikyu */
     public function getByUserId($userId) {
         return $this->query("
-            SELECT o.*, c.category_name 
+            SELECT o.* 
             FROM orders o
-            LEFT JOIN categories c ON o.category_id = c.id
             WHERE o.user_id = :uid
-            ORDER BY o.order_date DESC
+            ORDER BY o.created_at DESC
         ", ["uid" => $userId]);
     }
 
     /** pravi custom order (category, details, price su manualno) */
     public function createCustomOrder($data) {
         
-        return $this->insert($data);
+        return $this->add($data);
     }
 
     /** status postojeceg ordera */
     public function updateStatus($orderId, $status) {
         return $this->update(["status" => $status], $orderId);
     }
+    public function getByStatus($status) {
+        return $this->query("SELECT * FROM orders WHERE status = :status ORDER BY created_at DESC", ["status" => $status]);
+    }
+    public function getRecentOrders($limit = 10) {
+        return $this->query("SELECT * FROM orders ORDER BY created_at DESC LIMIT :lim", ["lim" => $limit]);
+    }
      public function getOrderWithItems($orderId) {
         return $this->query("
             SELECT 
                 o.id AS order_id, 
                 o.status,
-                o.order_date,
+                o.created_at,
                 o.total_amount,
                 oi.id AS order_item_id,
                 oi.quantity,
@@ -56,10 +64,15 @@ class OrderDao extends BaseDao {
                 p.name AS product_name,
                 p.image_url
             FROM orders o
-            LEFT JOIN orderitems oi ON oi.order_id = o.id
+            LEFT JOIN order_items oi ON oi.order_id = o.id
             LEFT JOIN products p ON p.id = oi.product_id
             WHERE o.id = :oid
         ", ["oid" => $orderId]);
+    }
+    
+    /** Delete an order by ID */
+    public function deleteOrder($id) {
+        return $this->delete($id);
     }
 }
 ?>

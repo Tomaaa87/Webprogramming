@@ -16,9 +16,14 @@ body {
     color: #fff;
     transition: background-image 0.3s ease; 
     min-height: 100vh;
+<<<<<<< HEAD
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+=======
+    overflow: hidden;
+    
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
 }
 
 
@@ -79,8 +84,14 @@ footer {
     text-align: center;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.5); 
+<<<<<<< HEAD
     width: 100%;
     margin-top: auto; 
+=======
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
 }
 
 footer p {
@@ -97,7 +108,11 @@ section {
 
 /* Admin dashboard scoped styles */
 .admin-container {
+<<<<<<< HEAD
     max-width: 95%;
+=======
+    max-width: 1280px;
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
     margin: 0 auto;
     padding: 0 0.75rem;
 }
@@ -181,6 +196,7 @@ section {
 }
 
 
+<<<<<<< HEAD
 /* Admin output area */
 .admin-output {
     margin-top: 1rem;
@@ -204,11 +220,14 @@ section {
 }
 .admin-table th { color: red; }
 
+=======
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
 @media (max-width: 768px) {
     .admin-header h1 { font-size: 1.6rem; }
     .admin-grid { grid-template-columns: repeat(2, 1fr); }
     body { overflow-y: auto; }
 }
+<<<<<<< HEAD
 .hamburger-menu{
     display:true;
 }
@@ -252,3 +271,5 @@ section {
 .admin-table tr:hover {
     background-color: rgba(255,255,255,0.1);
 }
+=======
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80

@@ -22,9 +22,16 @@ require_once __DIR__ . '/../../data/roles.php';
  *     @OA\Response(response=500, description="Server error")
  * )
  */
+<<<<<<< HEAD
 Flight::route('GET /products/in-stock', function() {
     Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::productService()->getProductsInStock());
+=======
+Flight::route('GET /products', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::productService()->search(""));
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
 });
 
 Flight::route('GET /products/all', function() {
@@ -78,6 +85,23 @@ Flight::route('GET /product/@id', function($id) {
 });
 
 /**
+<<<<<<< HEAD
+=======
+ * @OA\Get(
+ *     path="/products/in-stock",
+ *     tags={"Products"},
+ *     summary="Get all products with stock > 0",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Response(response=200, description="Products in stock returned")
+ * )
+ */
+Flight::route('GET /products/in-stock', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::productService()->getProductsInStock());
+});
+
+/**
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
  * @OA\Patch(
  *     path="/products/{id}/stock",
  *     tags={"Products"},
@@ -189,4 +213,27 @@ Flight::route('DELETE /products/@id', function($id) {
     Flight::json(["deleted" => Flight::productService()->deleteProduct($id)]);
 });
 
+<<<<<<< HEAD
+=======
+
+/**
+ * @OA\Get(
+ *     path="/products/all",
+ *     tags={"Products"},
+ *     summary="Get ALL products (no filtering)",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Response(
+ *         response=200,
+ *         description="List of all products"
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
+ * )
+ */
+Flight::route('GET /products/all', function() {
+    
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::productService()->getAllProducts());
+});
+
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
 ?>

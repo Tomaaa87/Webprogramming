@@ -142,7 +142,10 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+<<<<<<< HEAD
           loadJS('./assets/js/admin.js');
+=======
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
            console.log("About page ready!");
     }
 });
@@ -151,12 +154,16 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+<<<<<<< HEAD
         loadJS('./assets/js/admin.js');
         
         // Re-initialize the service every time the view is loaded
         if (window.AdminServiceUsers) {
             window.AdminServiceUsers.init();
         }
+=======
+           console.log("About page ready!");
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
     }
 
 });
@@ -165,6 +172,7 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+<<<<<<< HEAD
         loadJS('./assets/js/admin.js');
         
         if (window.AdminServiceProducts) {
@@ -173,6 +181,9 @@ app.route({
         } else {
             console.error("AdminServiceProducts not found!");
         }
+=======
+           console.log("About page ready!");
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
     }
 });
 app.route({
@@ -180,9 +191,13 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+<<<<<<< HEAD
         loadJS('./assets/js/admin.js');
                     
           
+=======
+           console.log("About page ready!");
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
     }
 });
 app.route({
@@ -190,9 +205,13 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+<<<<<<< HEAD
         loadJS('./assets/js/admin.js');
                    
             
+=======
+           console.log("About page ready!");
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
     }
 });
 app.route({
@@ -200,8 +219,11 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+<<<<<<< HEAD
         loadJS('./assets/js/admin.js');
                    
+=======
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
            console.log("About page ready!");
     }
 });
@@ -210,8 +232,11 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+<<<<<<< HEAD
         loadJS('./assets/js/admin.js');
             
+=======
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
            console.log("About page ready!");
     }
 });
@@ -220,8 +245,11 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+<<<<<<< HEAD
         loadJS('./assets/js/admin.js');
        
+=======
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
            console.log("About page ready!");
     }
 });

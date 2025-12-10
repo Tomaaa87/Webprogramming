@@ -36,7 +36,13 @@ class UserDao extends BaseDao {
     public function getAllUsers() {
         return $this->getAll();
     }
+<<<<<<< HEAD
 
+=======
+    public function getById($id) {
+        return $this->getById($id);
+    }
+>>>>>>> 3fad2a087a54eec5544563f042fe2f2064156d80
     public function getUsersByRole($role) {
         return $this->query("SELECT * FROM users WHERE role = :role ORDER BY id DESC", ["role" => $role]);
     }

@@ -11,6 +11,19 @@ class CartDao extends BaseDao {
         parent::__construct("cart");
     }
 
+    public function getAllCarts() {
+        // Group by user_id to show one row per user cart
+        return $this->query("
+            SELECT 
+                c.user_id, 
+                SUM(c.quantity) as total_items, 
+                MAX(c.added_at) as updated_at,
+                c.id as id -- Just taking one ID for reference
+            FROM cart c
+            GROUP BY c.user_id
+        ", []);
+    }
+
     /**
      * dodaje proizvod u korpu
      * Ako isti (user_id, product_id) postoji, povecava broj komada umjesto da pravi novi red.

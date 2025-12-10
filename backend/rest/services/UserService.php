@@ -29,15 +29,6 @@ class UserService extends BaseService {
                 throw new Exception("Invalid phone number format.");
             }
         }
-
-        // rola je obavezna i može biti samo 'admin' ili 'user'
-        if (!isset($user['role']) || empty($user['role'])) {
-            throw new Exception("Role is required and must be 'admin' or 'user'.");
-        }
-        $user['role'] = strtolower(trim($user['role']));
-        if (!in_array($user['role'], ['admin', 'user'])) {
-            throw new Exception("Role must be 'admin' or 'user'.");
-        }
         
         // hash lozinke ako je dostavljena
         if (isset($user['password']) && !empty($user['password'])) {

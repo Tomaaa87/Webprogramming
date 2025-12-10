@@ -3,8 +3,12 @@ require_once __DIR__ . '/../dao/CartDao.php';
 require_once __DIR__ . "/BaseService.php";
 class CartService extends BaseService {
 
-   public function __construct() {
+    public function __construct() {
         parent::__construct(new CartDao());
+    }
+
+    public function getAllCarts() {
+        return $this->dao->getAllCarts();
     }
     
     public function insertToCart($data) {

@@ -1,13 +1,16 @@
 <?php
 require_once 'BaseService.php';
 require_once __DIR__ . '/../dao/AuthDao.php';
+require_once __DIR__ . '/UserService.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 class AuthService extends BaseService {
     private $auth_dao;
+    private $user_service;
     public function __construct() {
         $this->auth_dao = new AuthDao();
+        $this->user_service = new UserService();
         parent::__construct(new AuthDao);
     }
 
@@ -16,24 +19,17 @@ class AuthService extends BaseService {
     }
 
     public function register($entity) {   
-        
         if (empty($entity['email']) || empty($entity['password'])) {
             return ['success' => false, 'error' => 'Email and password are required.'];
         }
 
-        $email_exists = $this->auth_dao->get_user_by_email($entity['email']);
-        if($email_exists){
-            return ['success' => false, 'error' => 'Email already registered.'];
+        try {
+            $created = $this->user_service->insertUser($entity);
+            if (isset($created['password'])) { unset($created['password']); }
+            return ['success' => true, 'data' => $created];
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
         }
-
-        $entity['password'] = password_hash($entity['password'], PASSWORD_BCRYPT);
-
-        $entity = parent::add($entity);
-
-        unset($entity['password']);
-        
-        return ['success' => true, 'data' => $entity];  
-                   
     }
 
     public function login($entity) {   

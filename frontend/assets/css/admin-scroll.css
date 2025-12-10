@@ -1,0 +1,38 @@
+
+/* Make the output area scrollable */
+.admin-output {
+    margin-top: 20px;
+    overflow: auto;
+    max-height: 60vh; /* Use viewport height to ensure it fits */
+    background: rgba(0,0,0,0.5);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+/* Ensure table looks good inside */
+.admin-table table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+.admin-table th, .admin-table td {
+    padding: 10px;
+    border: 1px solid #555;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #333;
+    position: sticky;
+    top: 0; /* Sticky header */
+}
+
+.admin-table tr:nth-child(even) {
+    background-color: rgba(255,255,255,0.05);
+}
+
+.admin-table tr:hover {
+    background-color: rgba(255,255,255,0.1);
+}

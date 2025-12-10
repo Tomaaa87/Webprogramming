@@ -125,6 +125,7 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/shop.css');
+
            console.log("About page ready!");
     }
 });
@@ -141,6 +142,7 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+          loadJS('./assets/js/admin.js');
            console.log("About page ready!");
     }
 });
@@ -149,7 +151,12 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+        
+        // Re-initialize the service every time the view is loaded
+        if (window.AdminServiceUsers) {
+            window.AdminServiceUsers.init();
+        }
     }
 
 });
@@ -158,7 +165,14 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+        
+        if (window.AdminServiceProducts) {
+            console.log("Initializing AdminServiceProducts...");
+            window.AdminServiceProducts.init();
+        } else {
+            console.error("AdminServiceProducts not found!");
+        }
     }
 });
 app.route({
@@ -166,7 +180,9 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+                    
+          
     }
 });
 app.route({
@@ -174,7 +190,9 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+                   
+            
     }
 });
 app.route({
@@ -182,6 +200,8 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+        loadJS('./assets/js/admin.js');
+                   
            console.log("About page ready!");
     }
 });
@@ -190,6 +210,8 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+        loadJS('./assets/js/admin.js');
+            
            console.log("About page ready!");
     }
 });
@@ -198,6 +220,8 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+        loadJS('./assets/js/admin.js');
+       
            console.log("About page ready!");
     }
 });

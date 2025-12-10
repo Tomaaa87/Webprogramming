@@ -22,12 +22,20 @@ require_once __DIR__ . '/../../data/roles.php';
  *     @OA\Response(response=500, description="Server error")
  * )
  */
+Flight::route('GET /products/in-stock', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::productService()->getProductsInStock());
+});
+
+Flight::route('GET /products/all', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::json(Flight::productService()->getAllProducts());
+});
+
 Flight::route('GET /products', function() {
-    
     Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::productService()->search(""));
 });
-
 
 /**
  * @OA\Get(
@@ -67,20 +75,6 @@ Flight::route('GET /products/@id', function($id) {
 Flight::route('GET /product/@id', function($id) {
     Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::productService()->getProductById($id));
-});
-
-/**
- * @OA\Get(
- *     path="/products/in-stock",
- *     tags={"Products"},
- *     summary="Get all products with stock > 0",
- *     security={{"ApiKey": {}}},
- *     @OA\Response(response=200, description="Products in stock returned")
- * )
- */
-Flight::route('GET /products/in-stock', function() {
-    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
-    Flight::json(Flight::productService()->getProductsInStock());
 });
 
 /**
@@ -193,26 +187,6 @@ Flight::route('DELETE /products/@id', function($id) {
     
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(["deleted" => Flight::productService()->deleteProduct($id)]);
-});
-
-
-/**
- * @OA\Get(
- *     path="/products/all",
- *     tags={"Products"},
- *     summary="Get ALL products (no filtering)",
- *     security={{"ApiKey": {}}},
- *     @OA\Response(
- *         response=200,
- *         description="List of all products"
- *     ),
- *     @OA\Response(response=500, description="Server error")
- * )
- */
-Flight::route('GET /products/all', function() {
-    
-    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
-    Flight::json(Flight::productService()->getAllProducts());
 });
 
 ?>

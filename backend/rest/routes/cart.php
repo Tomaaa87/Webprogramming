@@ -11,6 +11,25 @@ require_once __DIR__ . '/../../data/roles.php';
 
 /**
  * @OA\Get(
+ *     path="/cart",
+ *     tags={"Cart"},
+ *     summary="Get all carts (admin)",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Response(
+ *         response=200,
+ *         description="List of all active carts grouped by user"
+ *     ),
+ *     @OA\Response(response=500, description="Server error")
+ * )
+ */
+Flight::route('GET /cart', function() {
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    Flight::json(Flight::cartService()->getAllCarts());
+});
+
+
+/**
+ * @OA\Get(
  *     path="/cart/{user_id}",
  *     tags={"Cart"},
  *     summary="Get cart items for a user",

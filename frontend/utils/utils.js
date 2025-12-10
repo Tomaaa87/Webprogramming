@@ -1,5 +1,5 @@
 let Utils = {
-   datatable: function (table_id, columns, data, pageLength=15) {
+   datatable: function (table_id, columns, data) {
        if ($.fn.dataTable.isDataTable("#" + table_id)) {
          $("#" + table_id)
            .DataTable()
@@ -8,8 +8,6 @@ let Utils = {
        $("#" + table_id).DataTable({
          data: data,
          columns: columns,
-         pageLength: pageLength,
-         lengthMenu: [2, 5, 10, 15, 25, 50, 100, "All"],
        });
      },
      parseJwt: function(token) {

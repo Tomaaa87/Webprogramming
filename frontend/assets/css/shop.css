@@ -278,7 +278,9 @@ footer p {
 .container33 .btn:hover {
     background: #ff4757;
 }
-
+.hamburger {
+    display: none;
+}
 
 
 @media (max-width: 768px) {

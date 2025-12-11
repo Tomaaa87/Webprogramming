@@ -27,4 +27,137 @@
 			</div>
 		</section>
 	</div>
+	<div id="admin-output" class="admin-output">
+		<div id="admin-status" class="admin-status"></div>
+		<div id="admin-table" class="admin-table"></div>
+	</div>
+
+    <!-- Insert Order Modal -->
+    <div id="insert-order-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" id="close-insert-order-modal">&times;</span>
+            <h2>Insert New Order</h2>
+            <form id="insert-order-form">
+                <label for="order-user-id">User ID</label>
+                <input type="number" id="order-user-id" required>
+                <br><br>
+                <label for="order-status">Status</label>
+                <select id="order-status">
+                    <option value="Pending">Pending</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+                <br><br>
+                <h3>Items</h3>
+                <div id="order-items-container">
+                    <div class="order-item-row">
+                        <input type="number" placeholder="Product ID" class="item-product-id" required style="width: 100px;">
+                        <input type="number" placeholder="Qty" class="item-quantity" value="1" min="1" required style="width: 60px;">
+                        <button type="button" class="remove-item-btn admin-btn-danger" style="padding: 2px 5px;">X</button>
+                    </div>
+                </div>
+                <button type="button" id="add-item-btn" class="admin-btn" style="margin-top: 10px;">+ Add Item</button>
+                <br><br>
+                <button type="submit" class="admin-btn">Create Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Orders By User Modal -->
+    <div id="modal-orders-by-user" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-orders-by-user">&times;</span>
+            <h2>Orders By User</h2>
+            <form id="form-orders-by-user">
+                <label>User ID</label>
+                <input type="number" id="input-orders-by-user-id" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Orders By Status Modal -->
+    <div id="modal-orders-by-status" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-orders-by-status">&times;</span>
+            <h2>Orders By Status</h2>
+            <form id="form-orders-by-status">
+                <label>Status</label>
+                <select id="input-orders-by-status-val">
+                    <option value="Pending">Pending</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Recent Orders Modal -->
+    <div id="modal-recent-orders" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-recent-orders">&times;</span>
+            <h2>Recent Orders</h2>
+            <form id="form-recent-orders">
+                <label>Limit</label>
+                <input type="number" id="input-recent-orders-limit" value="10" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div id="modal-order-details" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-order-details">&times;</span>
+            <h2>Order Details</h2>
+            <form id="form-order-details">
+                <label>Order ID</label>
+                <input type="number" id="input-order-details-id" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Get Details</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update Order Status Modal -->
+    <div id="modal-update-status" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-update-status">&times;</span>
+            <h2>Update Order Status</h2>
+            <form id="form-update-status">
+                <label>Order ID</label>
+                <input type="number" id="input-update-status-id" required>
+                <br><br>
+                <label>New Status</label>
+                <select id="input-update-status-val">
+                    <option value="Pending">Pending</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+                <br><br>
+                <button type="submit" class="admin-btn">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Order Modal -->
+    <div id="modal-delete-order" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-delete-order">&times;</span>
+            <h2>Delete Order</h2>
+            <form id="form-delete-order">
+                <label>Order ID</label>
+                <input type="number" id="input-delete-order-id" required>
+                <br><br>
+                <button type="submit" class="admin-btn admin-btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
 </div>

@@ -15,13 +15,13 @@ class CustomOrderDao extends BaseDao {
     }
    // Unosi novu custom narudžbu u bazu
      public function insertCustomOrder($orderData) {
-
         return $this->add([
             "order_id"        => $orderData["order_id"],
             "user_id"         => $orderData["user_id"],
             "title"           => $orderData["title"],
             "estimated_price" => $orderData["estimated_price"],
-            "details"         => $orderData["details"]
+            "details"         => $orderData["details"],
+            "category"        => $orderData["category"] ?? null
         ]);
     }
 
@@ -36,7 +36,7 @@ class CustomOrderDao extends BaseDao {
  
     public function getByUserId($userId) {
         return $this->query("
-            SELECT co.*, u.name AS user_name
+            SELECT co.*, u.name AS user_name, u.email AS user_email
             FROM custom_orders co
             JOIN users u ON co.user_id = u.id
             WHERE co.user_id = :uid
@@ -48,11 +48,14 @@ class CustomOrderDao extends BaseDao {
         return $this->delete($orderId);
     }
     public function updateCustomOrder($id, $data) {
-        return $this->update([
-            "title" => $data["title"] ?? null,
-            "estimated_price" => $data["estimated_price"] ?? null,
-            "details" => $data["details"] ?? null
-        ], $id);
+        $fields = [];
+        if (isset($data["title"])) $fields["title"] = $data["title"];
+        if (isset($data["estimated_price"])) $fields["estimated_price"] = $data["estimated_price"];
+        if (isset($data["details"])) $fields["details"] = $data["details"];
+        
+        if (empty($fields)) return null;
+        
+        return $this->update($fields, $id);
     }
 }
     /**bili komentari oni za parametre(@param) greska*/

@@ -29,15 +29,6 @@ class UserService extends BaseService {
                 throw new Exception("Invalid phone number format.");
             }
         }
-
-        // rola je obavezna i može biti samo 'admin' ili 'user'
-        if (!isset($user['role']) || empty($user['role'])) {
-            throw new Exception("Role is required and must be 'admin' or 'user'.");
-        }
-        $user['role'] = strtolower(trim($user['role']));
-        if (!in_array($user['role'], ['admin', 'user'])) {
-            throw new Exception("Role must be 'admin' or 'user'.");
-        }
         
         // hash lozinke ako je dostavljena
         if (isset($user['password']) && !empty($user['password'])) {
@@ -72,9 +63,22 @@ class UserService extends BaseService {
             }
         }
 
+        // validacija adrese
+        if (isset($data['address']) && strlen($data['address']) < 3) {
+             throw new Exception("Address must be at least 3 characters long.");
+        }
+
         // ako se mijenja lozinka, obavezno je hashati
-        if (isset($data['password']) && !empty($data['password'])) {
-            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        if (isset($data['password'])) {
+            if (!empty($data['password'])) {
+                $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+            } else {
+                unset($data['password']);
+            }
+        }
+
+        if (empty($data)) {
+            return $this->dao->getById($id);
         }
 
         return $this->dao->updateUser($id, $data);

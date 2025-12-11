@@ -1,0 +1,95 @@
+<div class="user-dashboard-container">
+    <header class="user-header">
+        <h1>User Dashboard</h1>
+        <p>Manage your profile and orders</p>
+    </header>
+
+    <div class="user-grid">
+        <!-- Profile Management Section -->
+        <section class="user-card">
+            <h2>Profile Management</h2>
+            <p>Update your personal information or manage your account.</p>
+            
+            <div class="user-action-group">
+                <h3>Update Profile</h3>
+                <p>Change your address, phone, password, or email.</p>
+                <button class="user-btn" id="btn-show-update-form">Update User</button>
+            </div>
+
+            <div class="user-action-group">
+                <h3>Delete Profile</h3>
+                <p>Permanently delete your account.</p>
+                <button class="user-btn btn-danger" id="btn-delete-profile">Delete Profile</button>
+            </div>
+        </section>
+
+        <!-- Orders Management Section -->
+        <section class="user-card">
+            <h2>Orders</h2>
+            <p>View and manage your standard orders.</p>
+            
+            <div class="user-action-group">
+                <button class="user-btn" id="btn-get-orders">Get Your Orders</button>
+            </div>
+            <div id="orders-output" class="response-box"></div>
+        </section>
+
+        <!-- Custom Orders Management Section -->
+        <section class="user-card">
+            <h2>Custom Orders</h2>
+            <p>View and manage your custom part requests.</p>
+            
+            <div class="user-action-group">
+                <button class="user-btn" id="btn-get-custom-orders">Get Your Custom Orders</button>
+            </div>
+            <div id="custom-orders-output" class="response-box"></div>
+        </section>
+    </div>
+
+    <!-- Hidden Update Form (Initially Hidden) -->
+    <div id="update-form-container" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" id="close-update-form">&times;</span>
+            <h2>Update Profile</h2>
+            <form id="update-user-form">
+                <label for="update-name">Name</label>
+                <input type="text" id="update-name" name="name" placeholder="NAME LASTNAME">
+                <br><br>
+
+                <label for="update-email">Email Address</label>
+                <input type="email" id="update-email" name="email" placeholder="example@example.com">
+                <br><br>
+
+                <label for="update-phone">Phone Number</label>
+                <input type="tel" id="update-phone" name="phone" placeholder="+1234567890">
+                <small>Include country code, e.g., +387 for BIH</small>
+                <br><br>
+
+                <label for="update-password">New Password</label>
+                <input type="text" id="update-password" name="password" minlength="8" placeholder="Enter a new secure password">
+                <small>Leave empty to keep current password.</small>
+                <br><br>
+
+                <label for="update-address">Address</label>
+                <input type="text" id="update-address" name="address" placeholder="123 Sarajevo,">
+                <br><br>
+
+                <button type="button" class="user-btn" id="btn-submit-update">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Generic Confirmation Modal -->
+    <div id="confirmation-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-modal" id="close-confirmation-modal">&times;</span>
+            <h2 id="confirmation-title">Confirm Action</h2>
+            <p id="confirmation-message">Are you sure?</p>
+            <br>
+            <div class="user-action-group" style="justify-content: center; gap: 20px;">
+                <button class="user-btn btn-danger" id="btn-confirm-yes">Yes, Delete</button>
+                <button class="user-btn" id="btn-confirm-no">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

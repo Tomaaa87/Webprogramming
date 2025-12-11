@@ -125,6 +125,7 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/shop.css');
+
            console.log("About page ready!");
     }
 });
@@ -141,6 +142,7 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
+          loadJS('./assets/js/admin.js');
            console.log("About page ready!");
     }
 });
@@ -149,7 +151,12 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+        
+        // Re-initialize the service every time the view is loaded
+        if (window.AdminServiceUsers) {
+            window.AdminServiceUsers.init();
+        }
     }
 
 });
@@ -158,47 +165,91 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+        
+         if (window.AdminServiceProducts) {
+            window.AdminServiceProducts.init();
+        }
     }
 });
 app.route({
     view: "adminOrder",
     onReady: function() {
-        console.log("About page created!");
+        console.log("Admin Order page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+        
+        if (window.AdminServiceOrders) {
+            window.AdminServiceOrders.init();
+        }
     }
 });
 app.route({
     view: "adminOrderItem",
     onReady: function() {
-        console.log("About page created!");
+        console.log("Admin Order Item page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+        
+        
+        if (window.AdminServiceOrderItems) {
+            window.AdminServiceOrderItems.init();
+        } 
     }
 });
 app.route({
     view: "adminCustomOrder",
     onReady: function() {
-        console.log("About page created!");
+        console.log("Admin Custom Order page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+        
+        if (window.AdminServiceCustomOrders) {
+            window.AdminServiceCustomOrders.init();
+        } 
     }
 });
 app.route({
     view: "adminCategory",
     onReady: function() {
-        console.log("About page created!");
+        console.log("Admin Category page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+        
+        if (window.AdminServiceCategories) {
+            window.AdminServiceCategories.init();
+        } 
     }
 });
+
 app.route({
     view: "adminCart",
     onReady: function() {
-        console.log("About page created!");
+        console.log("Admin Cart page created!");
         loadCSS('./assets/css/admin.css');
-           console.log("About page ready!");
+        loadJS('./assets/js/admin.js');
+        
+        if (window.AdminServiceCart) {
+            window.AdminServiceCart.init();
+        } 
+    }
+});
+
+app.route({
+    view: "user",
+    onReady: function() {
+        console.log("User Dashboard page created!");
+        loadCSS('./assets/css/reg.css')
+        loadCSS('./assets/css/user.css');
+        loadJS('./assets/js/admin.js');
+        
+        
+        if (window.UserService) {
+            console.log("Initializing UserService...");
+            window.UserService.initDashboard();
+        } else {
+            console.error("UserService not found!");
+        }
     }
 });
 

@@ -12,7 +12,7 @@ class ProductDao extends BaseDao {
 
     /** uzima sve proizvode */
     public function getAllProducts() {
-        return $this->getAll();
+        return parent::getAll();
     }
     public function getProductById($id) {
         return $this->getById($id);

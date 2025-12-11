@@ -35,10 +35,13 @@ class CategoryDao extends BaseDao {
             "description"   => $data["description"]
         ]);}
     public function updateCategory($id, $data) {
-        return $this->update([
-            "category_name" => $data["category_name"],
-            "description"   => $data["description"]
-        ], $id);
+        $fields = [];
+        if (isset($data["category_name"])) $fields["category_name"] = $data["category_name"];
+        if (isset($data["description"])) $fields["description"] = $data["description"];
+        
+        if (empty($fields)) return null;
+        
+        return $this->update($fields, $id);
     }
     public function deleteCategory($id) {
         return $this->delete($id);}

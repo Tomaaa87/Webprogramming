@@ -28,6 +28,22 @@ Flight::route('GET /orders', function() {
 
 /**
  * @OA\Get(
+ *     path="/orders/recent",
+ *     tags={"Orders"},
+ *     summary="Get recent orders",
+ *     security={{"ApiKey": {}}},
+ *     @OA\Parameter(name="limit", in="query", required=false, @OA\Schema(type="integer", example=10)),
+ *     @OA\Response(response=200, description="Recent orders returned")
+ * )
+ */
+Flight::route('GET /orders/recent', function() {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    $limit = (int)(Flight::request()->query['limit'] ?? 10);
+    Flight::json(Flight::orderService()->getRecentOrders($limit));
+});
+
+/**
+ * @OA\Get(
  *     path="/orders/status/{status}",
  *     tags={"Orders"},
  *     summary="Get orders by status",
@@ -187,22 +203,6 @@ Flight::route('GET /orders/@order_id/details', function($order_id) {
 });
 
 /**
- * @OA\Get(
- *     path="/orders/recent",
- *     tags={"Orders"},
- *     summary="Get recent orders",
- *     security={{"ApiKey": {}}},
- *     @OA\Parameter(name="limit", in="query", required=false, @OA\Schema(type="integer", example=10)),
- *     @OA\Response(response=200, description="Recent orders returned")
- * )
- */
-Flight::route('GET /orders/recent', function() {
-    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
-    $limit = (int)(Flight::request()->query['limit'] ?? 10);
-    Flight::json(Flight::orderService()->getRecentOrders($limit));
-});
-
-/**
  * @OA\Delete(
  *     path="/orders/{id}",
  *     tags={"Orders"},
@@ -223,7 +223,7 @@ Flight::route('GET /orders/recent', function() {
  */
 Flight::route('DELETE /orders/@id', function($id) {
     
-    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(["deleted" => Flight::orderService()->deleteOrder($id)]);
 });
 ?>

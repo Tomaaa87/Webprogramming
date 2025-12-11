@@ -30,5 +30,21 @@ class OrderItemService {
     public function deleteByOrder($orderId) {
         return $this->dao->deleteByOrder($orderId);
     }
+
+    public function updateQuantity($id, $quantity) {
+        return $this->dao->updateQuantity($id, $quantity);
+    }
+
+    public function deleteItem($id) {
+        return $this->dao->deleteItem($id);
+    }
+
+    public function getTotalByOrder($orderId) {
+        return $this->dao->getTotalByOrder($orderId);
+    }
+
+    public function getQuantityByProduct($productId) {
+        return $this->dao->getQuantityByProduct($productId);
+    }
 }
 ?>

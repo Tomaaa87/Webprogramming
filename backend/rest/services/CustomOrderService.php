@@ -25,7 +25,22 @@ class CustomOrderService extends BaseService {
             throw new Exception("Custom order details must be at least 20 characters long.");
         }
 
-        // Persist into custom_orders via DAO
+        // 1. Create a parent Order first
+        $orderPayload = [
+            'user_id'      => $orderData['user_id'],
+            'status'       => 'Pending',
+            'total_amount' => $orderData['estimated_price'],
+            'is_custom'    => 1 // Assuming your orders table has this flag, or we just treat it as normal order
+        ];
+        
+        // We need to use OrderDao to insert the parent order
+        // Since we are in CustomOrderService, we can use $this->orderDao
+        $newOrder = $this->orderDao->add($orderPayload);
+        
+        // 2. Link the new Order ID to the Custom Order data
+        $orderData['order_id'] = $newOrder['id'];
+
+        // 3. Persist into custom_orders via DAO
         return $this->dao->insertCustomOrder($orderData);
     }
 

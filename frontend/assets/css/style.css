@@ -108,6 +108,9 @@ footer p {
 .hamburger-menu {
     display: none;
 }
+.hamburger {
+    display: none;
+}
 
 @media (max-width: 768px) {
     body {

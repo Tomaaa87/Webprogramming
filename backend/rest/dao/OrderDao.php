@@ -49,7 +49,8 @@ class OrderDao extends BaseDao {
         return $this->query("SELECT * FROM orders WHERE status = :status ORDER BY created_at DESC", ["status" => $status]);
     }
     public function getRecentOrders($limit = 10) {
-        return $this->query("SELECT * FROM orders ORDER BY created_at DESC LIMIT :lim", ["lim" => $limit]);
+        $limit = (int)$limit;
+        return $this->query("SELECT * FROM orders ORDER BY created_at DESC LIMIT $limit", []);
     }
      public function getOrderWithItems($orderId) {
         return $this->query("

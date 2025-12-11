@@ -24,6 +24,9 @@ class UserDao extends BaseDao {
     public function deleteUser($id) {
         return $this->delete($id);
     }
+    public function getById($id) {
+        return parent::getById($id); 
+    }
 
 
     public function updateUser($id, $data) {
@@ -33,9 +36,7 @@ class UserDao extends BaseDao {
     public function getAllUsers() {
         return $this->getAll();
     }
-    public function getById($id) {
-        return $this->getById($id);
-    }
+
     public function getUsersByRole($role) {
         return $this->query("SELECT * FROM users WHERE role = :role ORDER BY id DESC", ["role" => $role]);
     }

@@ -45,6 +45,30 @@ class OrderItemDao extends BaseDao {
     public function getAllio() {
         return $this->getAll();
     }
+
+    public function updateQuantity($id, $quantity) {
+        return $this->update(["quantity" => $quantity], $id);
+    }
+
+    public function deleteItem($id) {
+        return $this->delete($id);
+    }
+
+    public function getTotalByOrder($orderId) {
+        return $this->query_unique("
+            SELECT SUM(quantity * price) as total
+            FROM order_items
+            WHERE order_id = :oid
+        ", ["oid" => $orderId]);
+    }
+
+    public function getQuantityByProduct($productId) {
+        return $this->query_unique("
+            SELECT SUM(quantity) as total_quantity
+            FROM order_items
+            WHERE product_id = :pid
+        ", ["pid" => $productId]);
+    }
 }
 ?>
 

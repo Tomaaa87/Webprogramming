@@ -42,6 +42,9 @@ header h1 {
     padding: 20px;
     align-items: center; 
 }
+.hamburger {
+    display: none;
+}
 
 .thumbnail {
     width: 150px;

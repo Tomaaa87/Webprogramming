@@ -2,11 +2,11 @@
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
-define('LOCALSERVER', 'http://localhost/Webprogramming/backend/');
+define('LOCALSERVER', 'http://localhost/web1/Webprogramming/backend/');
 define('PRODSERVER', 'https://add-production-server-after-deployment/backend/');
 
 if($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1'){
-    define('BASE_URL', 'http://localhost/Webprogramming/backend/');
+    define('BASE_URL', 'http://localhost/web1/Webprogramming/backend/');
 } else {
     define('BASE_URL', 'https://add-production-server-after-deployment/backend/');
 }

@@ -14,18 +14,22 @@ class BaseService {
         return $this->dao->getById($id);
     }
 
-    public function create($data) {
-        return $this->dao->insert($data);
+    public function add($data) {
+       
+        return $this->dao->add($data);
     }
 
     public function update($id, $data) {
-        return $this->dao->update($id, $data);
+        
+        return $this->dao->update($data, $id);
     }
 
     public function delete($id) {
         return $this->dao->delete($id);
     }
     public function insert($data) {
-        return $this->dao->insert($data);
+        
+        return $this->dao->add($data);
     }
 }
+?>

@@ -1,0 +1,111 @@
+<div class="admin-container">
+	<header class="admin-header">
+		<h1>Category Admin</h1>
+		<p>Manage product categories</p>
+	</header>
+
+	<div class="admin-grid">
+		<section class="admin-card">
+			<h2>Browse</h2>
+			<p>List all, search by name, or get by ID</p>
+			<div class="admin-actions">
+				<button class="admin-btn" id="admin-list-categories">List Categories</button>
+				<button class="admin-btn" id="admin-search-categories">Search Categories</button>
+				<button class="admin-btn" id="admin-category-by-id">Get Category By ID</button>
+			</div>
+		</section>
+
+		<section class="admin-card">
+			<h2>Modify</h2>
+			<p>Create, update, or delete categories</p>
+			<div class="admin-actions">
+				<button class="admin-btn" id="admin-add-category">Add Category</button>
+				<button class="admin-btn" id="admin-update-category">Update Category</button>
+				<button class="admin-btn admin-btn-danger" id="admin-delete-category">Delete Category</button>
+			</div>
+		</section>
+	</div>
+	<div id="admin-output" class="admin-output">
+		<div id="admin-status" class="admin-status"></div>
+		<div id="admin-table" class="admin-table"></div>
+	</div>
+
+    <!-- Search Categories Modal -->
+    <div id="modal-search-categories" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-search-categories">&times;</span>
+            <h2>Search Categories</h2>
+            <form id="form-search-categories">
+                <label>Search Query</label>
+                <input type="text" id="input-search-categories-query" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Get Category By ID Modal -->
+    <div id="modal-category-by-id" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-category-by-id">&times;</span>
+            <h2>Get Category By ID</h2>
+            <form id="form-category-by-id">
+                <label>Category ID</label>
+                <input type="number" id="input-category-by-id-val" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="modal-add-category" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-add-category">&times;</span>
+            <h2>Add Category</h2>
+            <form id="form-add-category">
+                <label>Category Name</label>
+                <input type="text" id="input-add-category-name" required>
+                <br><br>
+                <label>Description</label>
+                <input type="text" id="input-add-category-description" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Add Category</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update Category Modal -->
+    <div id="modal-update-category" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-update-category">&times;</span>
+            <h2>Update Category</h2>
+            <form id="form-update-category">
+                <label>Category ID</label>
+                <input type="number" id="input-update-category-id" required>
+                <br><br>
+                <label>New Name (Optional)</label>
+                <input type="text" id="input-update-category-name">
+                <br><br>
+                <label>New Description (Optional)</label>
+                <input type="text" id="input-update-category-description">
+                <br><br>
+                <button type="submit" class="admin-btn">Update Category</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Category Modal -->
+    <div id="modal-delete-category" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-delete-category">&times;</span>
+            <h2>Delete Category</h2>
+            <form id="form-delete-category">
+                <label>Category ID</label>
+                <input type="number" id="input-delete-category-id" required>
+                <br><br>
+                <button type="submit" class="admin-btn admin-btn-danger">Delete Category</button>
+            </form>
+        </div>
+    </div>
+</div>

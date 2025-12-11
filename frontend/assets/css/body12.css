@@ -48,6 +48,9 @@ nav a:hover {
 main {
     padding: 20px;
 }
+.hamburger {
+    display: none;
+}
 
 .shop-section {
     text-align: center;

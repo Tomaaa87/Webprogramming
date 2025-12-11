@@ -1,0 +1,120 @@
+<div class="admin-container">
+	<header class="admin-header">
+		<h1>Cart Admin</h1>
+		<p>Manage carts and items</p>
+	</header>
+
+	<div class="admin-grid">
+		<section class="admin-card">
+			<h2>Browse</h2>
+			<p>View cart by user or list all</p>
+			<div class="admin-actions">
+				<button class="admin-btn" id="admin-list-carts">List Carts</button>
+				<button class="admin-btn" id="admin-cart-by-user">Cart By User</button>
+			</div>
+		</section>
+
+		<section class="admin-card">
+			<h2>Modify</h2>
+			<p>Add, update, or remove cart items</p>
+			<div class="admin-actions">
+				<button class="admin-btn" id="admin-add-to-cart">Add To Cart</button>
+				<button class="admin-btn" id="admin-update-cart-item">Update Cart Item</button>
+				<button class="admin-btn admin-btn-danger" id="admin-remove-cart-item">Remove Cart Item</button>
+				<button class="admin-btn admin-btn-danger" id="admin-clear-cart">Clear Cart</button>
+			</div>
+		</section>
+	</div>
+	<div id="admin-output" class="admin-output">
+		<div id="admin-status" class="admin-status"></div>
+		<div id="admin-table" class="admin-table"></div>
+	</div>
+
+    <!-- Cart By User Modal -->
+    <div id="modal-cart-by-user" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-cart-by-user">&times;</span>
+            <h2>Cart By User</h2>
+            <form id="form-cart-by-user">
+                <label>User ID</label>
+                <input type="number" id="input-cart-user-id" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add To Cart Modal -->
+    <div id="modal-add-to-cart" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-add-to-cart">&times;</span>
+            <h2>Add To Cart</h2>
+            <form id="form-add-to-cart">
+                <label>User ID</label>
+                <input type="number" id="input-add-cart-user-id" required>
+                <br><br>
+                <label>Product ID</label>
+                <input type="number" id="input-add-cart-product-id" required>
+                <br><br>
+                <label>Quantity</label>
+                <input type="number" id="input-add-cart-quantity" value="1" required>
+                <br><br>
+                <label>Unit Price (Optional)</label>
+                <input type="number" step="0.01" id="input-add-cart-price">
+                <br><br>
+                <button type="submit" class="admin-btn">Add Item</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update Cart Item Modal -->
+    <div id="modal-update-cart-item" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-update-cart-item">&times;</span>
+            <h2>Update Cart Item</h2>
+            <form id="form-update-cart-item">
+                <label>User ID</label>
+                <input type="number" id="input-update-cart-user-id" required>
+                <br><br>
+                <label>Product ID</label>
+                <input type="number" id="input-update-cart-product-id" required>
+                <br><br>
+                <label>New Quantity</label>
+                <input type="number" id="input-update-cart-quantity" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Update Item</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Remove Cart Item Modal -->
+    <div id="modal-remove-cart-item" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-remove-cart-item">&times;</span>
+            <h2>Remove Cart Item</h2>
+            <form id="form-remove-cart-item">
+                <label>User ID</label>
+                <input type="number" id="input-remove-cart-user-id" required>
+                <br><br>
+                <label>Product ID</label>
+                <input type="number" id="input-remove-cart-product-id" required>
+                <br><br>
+                <button type="submit" class="admin-btn admin-btn-danger">Remove Item</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Clear Cart Modal -->
+    <div id="modal-clear-cart" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-clear-cart">&times;</span>
+            <h2>Clear Cart</h2>
+            <form id="form-clear-cart">
+                <label>User ID</label>
+                <input type="number" id="input-clear-cart-user-id" required>
+                <br><br>
+                <button type="submit" class="admin-btn admin-btn-danger">Clear Cart</button>
+            </form>
+        </div>
+    </div>
+</div>

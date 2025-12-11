@@ -16,6 +16,11 @@ class CategoryDao extends BaseDao {
         return $this->getAll();
     }
 
+    /** pojedinacna kategorija po id */
+    public function getCategoryById($id) {
+        return $this->getById($id);
+    }
+
     /**  trazi kategorije gdje je ime slicno */
     public function searchByName($name) {
         $like = "%" . $name . "%";
@@ -25,15 +30,18 @@ class CategoryDao extends BaseDao {
         );
     }
     public function insertCategory($data) {
-        return $this->insert([
+        return $this->add([
             "category_name" => $data["category_name"],
             "description"   => $data["description"]
         ]);}
     public function updateCategory($id, $data) {
-        return $this->update($id, [
-            "category_name" => $data["category_name"],
-            "description"   => $data["description"]
-        ]);
+        $fields = [];
+        if (isset($data["category_name"])) $fields["category_name"] = $data["category_name"];
+        if (isset($data["description"])) $fields["description"] = $data["description"];
+        
+        if (empty($fields)) return null;
+        
+        return $this->update($fields, $id);
     }
     public function deleteCategory($id) {
         return $this->delete($id);}

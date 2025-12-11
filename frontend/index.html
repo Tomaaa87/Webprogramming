@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<script src="./utils/constants.js"></script>
+<script src="./utils/utils.js"></script>
+<script src="./utils/rest-client.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +29,8 @@
             <a href="#projects1">Projects</a>
             <a href="#ourservices1">Service</a>
             <a href="#cart">Cart</a>
+            <a href="#admin">Admin</a>
+            <a href="#user">My profile</a>
           
         </div>
         <div class="desktop-menu">
@@ -36,6 +40,7 @@
             <a href="#projects1">Projects</a>
             <a href="#ourservices1">Service</a>
             <a href="#cart">Cart</a>
+            <a href="#admin">Admin</a>
             
         </div>
     </nav>
@@ -73,6 +78,35 @@
         <section id="custom" data-load="customorders.html">
             <h1>CUSTOM PARTS</h1>
         </section>
+        <section id="admin" data-load="admin.html">
+            <h1>ADMIN</h1>
+        </section>
+        <section id="adminUser" data-load="adminUser.html">
+            <h1>ADMIN USERS</h1>
+        </section>
+        <section id="adminProducts" data-load="adminProducts.html">
+            <h1>ADMIN PRODUCTS</h1>
+        </section>
+        <section id="adminOrder" data-load="adminOrder.html">
+            <h1>ADMIN ORDERS</h1>       
+        </section>
+        <section id="adminOrderItem" data-load="adminOrderItem.html">
+            <h1>ADMIN ORDER ITEMS</h1>  
+        </section>
+        <section id="adminCustomOrder" data-load="adminCustomOrder.html">
+            <h1>ADMIN CUSTOM ORDERS</h1>    
+        </section>
+        <section id="adminCategory" data-load="adminCategory.html">
+            <h1>ADMIN CATEGORIES</h1>   
+        </section>
+        <section id="adminCart" data-load="adminCart.html">
+            <h1>ADMIN CARTS</h1>   
+        </section>
+        <section id="user" data-load="user.html">
+            <h1>USER DASHBOARD</h1>   
+        </section>
+
+
     </main>
 
     <footer>
@@ -85,7 +119,18 @@
     <script src="./assets/js/hamburger.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="./assets/js/navbar.js"></script>
-    <script src="./assets/js/login.js"></script>
+    <!--<script src="./assets/js/login.js"></script>-->
+    <script src="./services/navbar-service.js"></script>
+    <script src="./services/user-service.js"></script>
+    <script src="./services/admin-serviceUsers.js"></script>
+    <script src="./services/admin-serviceProducts.js"></script>
+    <script src="./services/admin-serviceOrders.js"></script>
+    <script src="./services/admin-serviceOrderItems.js"></script>
+    <script src="./services/admin-serviceCustomOrders.js"></script>
+    <script src="./services/admin-serviceCategories.js"></script>
+    <script src="./services/admin-serviceCart.js"></script>
+    <script src="./services/cart-service.js"></script>
+    
     
     <!--<script src="./assets/js/accordion.js"></script>
     <script src="./assets/js/lighttheme.js"></script>

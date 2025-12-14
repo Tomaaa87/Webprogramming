@@ -17,7 +17,7 @@ var AdminServiceUsers = {
         this.attachListener('form-add-user', 'submit', this.submitAddUser);
         this.attachListener('form-delete-user', 'submit', this.submitDeleteUser);
 
-        // Modal closing logic
+        
         var closeBtns = document.querySelectorAll('.close-modal');
         closeBtns.forEach(function(btn) {
             btn.onclick = function() {

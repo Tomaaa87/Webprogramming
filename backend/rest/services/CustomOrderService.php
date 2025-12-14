@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../dao/CustomOrderDao.php';
+require_once __DIR__ . '/../dao/OrderDao.php';
 require_once __DIR__ . "/BaseService.php";
 class CustomOrderService extends BaseService {
     private $orderDao;
@@ -25,12 +26,27 @@ class CustomOrderService extends BaseService {
             throw new Exception("Custom order details must be at least 20 characters long.");
         }
 
+        // Ensure we have a user_id. If client provided an order_id but no user_id,
+        // try to resolve the user from the existing order record.
+        if (empty($orderData['user_id'])) {
+            if (!empty($orderData['order_id'])) {
+                $existing = $this->orderDao->getOrderById($orderData['order_id']);
+                if ($existing && isset($existing['user_id'])) {
+                    $orderData['user_id'] = $existing['user_id'];
+                }
+            }
+        }
+
+        if (empty($orderData['user_id'])) {
+            throw new Exception("User ID is required to create a custom order.");
+        }
+
         // 1. Create a parent Order first
         $orderPayload = [
             'user_id'      => $orderData['user_id'],
-            'status'       => 'Pending',
+            'status'       => 'Processing',
             'total_amount' => $orderData['estimated_price'],
-            'is_custom'    => 1 // Assuming your orders table has this flag, or we just treat it as normal order
+            'is_custom'    => 1 // assuming your orders table has this flag
         ];
         
         // We need to use OrderDao to insert the parent order

@@ -15,7 +15,7 @@ var AdminServiceCart = {
         this.attachListener('form-remove-cart-item', 'submit', this.submitRemoveCartItem);
         this.attachListener('form-clear-cart', 'submit', this.submitClearCart);
 
-        // Modal closing logic
+    
         var closeBtns = document.querySelectorAll('.close-modal');
         closeBtns.forEach(function(btn) {
             btn.onclick = function() {

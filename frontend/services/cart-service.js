@@ -1,166 +1,256 @@
-// Simple cart service (no async/promises). Uses existing REST endpoints and works with image_url when available.
-(function(global){
-    var CartService = {
-        state: {
-            userId: null,
-            items: [],
-            totals: { total_price: 0, total_items: 0 }
-        },
+//komentar za test pusha na github
+var CartService = {
+    state: {
+        userId: null,
+        items: [],
+        totals: { total_price: 0, total_items: 0 },
+        products: {}
+    },
 
-        init: function(opts) {
-            this.state.userId = opts.userId;
-            this.listSelector = opts.listSelector || '#cart-items';
-            this.totalSelector = opts.totalSelector || '#cart-total';
-            this.emptySelector = opts.emptySelector || '#cart-empty';
-            this.onChange = opts.onChange;
-            this.bindButtons();
-            this.load();
-        },
-            
-        attachListener: function(id, event, handler) {
-            var el = document.getElementById(id);
-            if (el) {
-                el.removeEventListener(event, handler);
-                el.addEventListener(event, handler);
-            }
-        },
+    init: function() {
+        this.state.userId = this.resolveUserId();
+        
+        
+        this.setupEventListeners();
+        
+        
+        this.loadProducts(this.refreshCart.bind(this));
+    },
 
-        load: function() {
-            var self = this;
-            if (!self.state.userId) {
-                console.warn('CartService: userId not provided');
-                return;
-            }
-
-            // Load items
-            RestClient.get('cart/' + self.state.userId, function(data){
-                self.state.items = Array.isArray(data) ? data : (data ? [data] : []);
-                self.render();
-                if (self.onChange) self.onChange(self.state);
-            }, function(err){ console.error(err); });
-
-            // Load totals
-            RestClient.get('cart/total/' + self.state.userId, function(data){
-                self.state.totals = data || { total_price: 0, total_items: 0 };
-                self.render();
-                if (self.onChange) self.onChange(self.state);
-            }, function(err){ console.error(err); });
-        },
-
-        addItem: function(productId, quantity, unitPrice, imageUrl) {
-            var self = this;
-            var payload = {
-                user_id: self.state.userId,
-                product_id: productId,
-                quantity: quantity,
-                unit_price: unitPrice
-            };
-            if (imageUrl) payload.image_url = imageUrl; // forward-compatible if backend stores it
-
-            RestClient.post('cart', payload, function(){
-                self.load();
-                if (window.toastr) toastr.success('Added to cart');
-            }, function(err){
-                console.error(err);
-                if (window.toastr) toastr.error('Could not add to cart');
-            });
-        },
-
-        updateItem: function(productId, quantity) {
-            var self = this;
-            var payload = {
-                user_id: self.state.userId,
-                product_id: productId,
-                quantity: quantity
-            };
-            RestClient.put('cart', payload, function(){ self.load(); }, function(err){ console.error(err); });
-        },
-
-        removeItem: function(productId) {
-            var self = this;
-            RestClient.delete('cart/item/' + self.state.userId + '/' + productId, {}, function(){ self.load(); }, function(err){ console.error(err); });
-        },
-
-        clear: function() {
-            var self = this;
-            RestClient.delete('cart/' + self.state.userId, {}, function(){ self.load(); }, function(err){ console.error(err); });
-        },
-
-        render: function() {
-            var listEl = document.querySelector(this.listSelector);
-            var totalEl = document.querySelector(this.totalSelector);
-            var emptyEl = document.querySelector(this.emptySelector);
-            if (!listEl) return;
-
-            if (!this.state.items.length) {
-                listEl.innerHTML = '';
-                if (emptyEl) emptyEl.style.display = 'block';
-                if (totalEl) totalEl.textContent = 'Total: $0.00 (0 items)';
-                return;
-            }
-
-            if (emptyEl) emptyEl.style.display = 'none';
-
-            var html = '';
-            for (var i = 0; i < this.state.items.length; i++) {
-                var item = this.state.items[i];
-                var img = item.image_url ? '<img class="cart-img" src="' + item.image_url + '" alt="' + (item.product_name || 'Product') + '">' : '';
-                html += '<div class="cart-item">' +
-                        img +
-                        '<div class="cart-details">' +
-                            '<h3>' + (item.product_name || ('Product #' + item.product_id)) + '</h3>' +
-                            '<p>Quantity: ' + (item.quantity || 1) + '</p>' +
-                            '<p>Price: $' + (item.unit_price || item.price || 0) + '</p>' +
-                        '</div>' +
-                    '</div>';
-            }
-            listEl.innerHTML = html;
-
-            if (totalEl) {
-                var price = this.state.totals.total_price || 0;
-                var count = this.state.totals.total_items || this.state.items.length;
-                totalEl.textContent = 'Total: $' + price + ' (' + count + ' items)';
-            }
-        },
-
-        bindButtons: function() {
-            var self = this;
-            var buttons = [
-                { id: 'btn-cart-pirelli', productId: 1, price: 330, img: './assets/images/pirelli.webp' },
-                { id: 'btn-cart-continental', productId: 2, price: 200, img: './assets/images/continental.webp' },
-                { id: 'btn-cart-kumho', productId: 3, price: 150, img: './assets/images/kumho.webp' },
-                { id: 'btn-cart-turbo', productId: 4, price: 1890, img: './assets/images/turbo.webp' },
-                { id: 'btn-cart-intake', productId: 5, price: 985, img: './assets/images/intake.webp' },
-                { id: 'btn-cart-exhaust', productId: 6, price: 2750, img: './assets/images/exhaust.webp' },
-                { id: 'btn-cart-spoiler', productId: 7, price: 750, img: './assets/images/spoiler.webp' },
-                { id: 'btn-cart-frontlip', productId: 8, price: 450, img: './assets/images/frontlip.webp' },
-                { id: 'btn-cart-rearlip', productId: 9, price: 750, img: './assets/images/rearlip.webp' }
-            ];
-
-            var clickHandler = function(config) {
-                return function(e) {
-                    e.preventDefault();
-                    if (!self.state.userId) {
-                        alert('Please log in to add items to cart.');
-                        return;
-                    }
-                    self.addItem(config.productId, 1, config.price, config.img);
-                };
-            };
-
-            for (var i = 0; i < buttons.length; i++) {
-                var cfg = buttons[i];
-                this.attachListener(cfg.id, 'click', clickHandler(cfg));
-            }
+    resolveUserId: function() {
+        if (window.UserService && typeof UserService.currentUser === 'function') {
+            var u = UserService.currentUser();
+            if (u && (u.id || u.user_id)) return u.id || u.user_id;
         }
-    };
+        var token = localStorage.getItem('user_token');
+        var parsed = token ? Utils.parseJwt(token) : null;
+        if (parsed) {
+            if (parsed.user && (parsed.user.id || parsed.user.user_id)) return parsed.user.id || parsed.user.user_id;
+            if (parsed.id || parsed.user_id || parsed.uid || parsed.sub) return parsed.id || parsed.user_id || parsed.uid || parsed.sub;
+        }
+        var legacy = localStorage.getItem('user_id');
+        return legacy ? parseInt(legacy) : null;
+    },
 
-    // Auto-init when DOM is ready
-    document.addEventListener('DOMContentLoaded', function(){
-        var userId = parseInt(localStorage.getItem('user_id'));
-        var service = Object.create(CartService);
-        service.init({ userId: userId });
-        global.CartService = service;
-    });
+    
+    setupEventListeners: function() {
+        var self = this;
 
-})(window);
+        document.body.addEventListener('click', function(e) {
+            var target = e.target;
+
+           
+            var addBtn = target.closest('.accordion-toggle') || target.closest('[data-product-id]');
+            if (addBtn && addBtn.textContent.includes('Add to cart')) {
+              
+                if(addBtn.hasAttribute('data-product-id')) {
+                    e.preventDefault();
+                    self.handleAddClick(addBtn);
+                    return;
+                }
+            }
+
+            
+            if (target.classList.contains('cart-qty-btn') || target.classList.contains('cart-remove')) {
+                e.preventDefault();
+                var action = target.getAttribute('data-action');
+                var pid = parseInt(target.getAttribute('data-product-id'));
+                
+                if (action === 'inc') self.updateItem(pid, self.getQty(pid) + 1);
+                else if (action === 'dec') {
+                    var next = self.getQty(pid) - 1;
+                    if (next <= 0) self.removeItem(pid); else self.updateItem(pid, next);
+                }
+                else if (action === 'remove') self.removeItem(pid);
+                return;
+            }
+
+            if (target.id === 'cart-clear') {
+                e.preventDefault();
+                if (!self.state.userId) return;
+                self.clear();
+            }
+       
+            if (target.id === 'cart-checkout') {
+                e.preventDefault();
+                if (!self.state.userId) return;
+                
+                
+                if (self.state.items.length === 0) {
+                    alert("Your cart is empty!");
+                    return;
+                }
+
+                // Simulate Purchase
+                if (confirm("Confirm purchase of " + self.state.totals.total_items + " items for " + self.state.totals.grand_total + " Euros?")) {
+                    // We reuse the 'clear' endpoint because 'buying' empties the cart
+                    RestClient.delete('cart/' + self.state.userId, {}, function() {
+                        alert("🎉 Purchase Successful! Thank you for shopping.");
+                        self.refreshCart();
+                        // Optional: Redirect to shop
+                        // window.location.hash = '#shop'; 
+                    }, function(err) {
+                        console.error(err);
+                        alert("Checkout failed. Please try again.");
+                    });
+                }
+            }
+
+        });
+    },
+
+    handleAddClick: function(btn) {
+        if (!this.state.userId) {
+            alert('Please log in to add items to cart.');
+            return;
+        }
+        var pid = parseInt(btn.getAttribute('data-product-id'));
+        var product = this.state.products[pid] || {};
+        
+        // Prioritize getting the image from the button attribute (ShopService logic), then the product list
+        var img = btn.getAttribute('data-img') || product.image_url || '';
+        var price = parseFloat(btn.getAttribute('data-price')) || parseFloat(product.price || 0);
+
+        this.addToCart(pid, { price: price, image: img });
+    },
+
+    addToCart: function(productId, opts) {
+        var self = this;
+        var img = opts.image || '';
+        var price = opts.price || 0;
+
+        var payload = {
+            user_id: self.state.userId,
+            product_id: productId,
+            quantity: 1,
+            unit_price: price,
+           
+            image_url: img 
+        };
+
+        RestClient.post('cart', payload, function(){
+            self.refreshCart();
+         toastr.success('Added to cart');
+        }, function(err){
+            console.error(err);
+        });
+    },
+
+    loadProducts: function(done) {
+        var self = this;
+        RestClient.get('products/public', function(data){
+            if (Array.isArray(data)) {
+                data.forEach(function(p){ self.state.products[p.id] = p; });
+            }
+            if (done) done();
+        }, function(){ if (done) done(); });
+    },
+
+    refreshCart: function() {
+        if (!this.state.userId) return;
+        this.fetchItems();
+        this.fetchTotals();
+    },
+
+    fetchItems: function() {
+        var self = this;
+        RestClient.get('cart/' + self.state.userId, function(data){
+            self.state.items = Array.isArray(data) ? data : (data ? [data] : []);
+            self.render();
+        });
+    },
+
+    fetchTotals: function() {
+        var self = this;
+        RestClient.get('cart/total/' + self.state.userId, function(data){
+            self.state.totals = data || { total_price: 0, total_items: 0 };
+            self.render();
+        });
+    },
+
+    
+    updateItem: function(productId, quantity) {
+        var self = this;
+        var payload = { user_id: self.state.userId, product_id: productId, quantity: quantity };
+        RestClient.put('cart', payload, function(){ self.refreshCart(); });
+    },
+
+    removeItem: function(productId) {
+        var self = this;
+        RestClient.delete('cart/item/' + self.state.userId + '/' + productId, {}, function(){ self.refreshCart(); });
+    },
+
+    clear: function() {
+        var self = this;
+        RestClient.delete('cart/' + self.state.userId, {}, function(){ self.refreshCart(); });
+    },
+
+  getQty: function(pid) {
+        var found = this.state.items.find(item => item.product_id == pid);
+        return found ? parseInt(found.quantity) : 0;
+    },
+
+    
+    render: function() {
+        
+        var listEl = document.getElementById('cart-items');
+        var totalEl = document.getElementById('cart-total');
+        var emptyEl = document.getElementById('cart-empty');
+
+        
+        if (!listEl) return; 
+
+        
+        if (!this.state.items.length) {
+            listEl.innerHTML = '';
+            if (emptyEl) emptyEl.style.display = 'block';
+            if (totalEl) totalEl.textContent = 'Total: $0 (0 items)';
+            return;
+        }
+
+        if (emptyEl) emptyEl.style.display = 'none';
+
+        var html = this.state.items.map(function(item){
+       
+            var imgSrc = item.image_url || 'https://via.placeholder.com/100?text=No+Img';
+
+            return `
+                <div class="cart-item">
+                    <img class="cart-img" src="${imgSrc}" 
+                         style="width:80px; height:80px; object-fit:cover; margin-right:15px;"
+                         onerror="this.src='https://via.placeholder.com/80?text=Error'">
+                    
+                    <div class="cart-details" style="flex:1">
+                        <h3>${item.product_name || 'Product'}</h3>
+                        <p>Price: ${item.unit_price} Euros</p>
+                        
+                        <div class="cart-qty-row" style="margin:10px 0;">
+                            <button class="cart-qty-btn" data-action="dec" data-product-id="${item.product_id}">-</button>
+                            <span class="cart-qty-val" style="margin:0 10px; font-weight:bold;">${item.quantity}</span>
+                            <button class="cart-qty-btn" data-action="inc" data-product-id="${item.product_id}">+</button>
+                        </div>
+                        
+                        <button class="cart-remove btn btn-danger btn-sm" data-action="remove" data-product-id="${item.product_id}">Remove</button>
+                    </div>
+                    <div class="cart-line-total" style="font-weight:bold;">
+                        ${(item.quantity * item.unit_price).toFixed(2)} €
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        listEl.innerHTML = html;
+
+        if (totalEl) {
+            var price = this.state.totals.grand_total || 0;
+            var count = this.state.totals.items_count || 0;
+            totalEl.textContent = `Total: ${parseFloat(price).toFixed(2)} Euros (${count} items)`;
+        }
+    }
+};
+
+
+document.addEventListener('DOMContentLoaded', function(){
+    CartService.init(); 
+    window.CartService = CartService;
+});

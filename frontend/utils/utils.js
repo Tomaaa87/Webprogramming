@@ -20,5 +20,6 @@ let Utils = {
          console.error("Invalid JWT token", e);
          return null;
        }
-     }  
+     },
+    
 }

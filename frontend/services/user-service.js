@@ -85,7 +85,7 @@ var UserService = {
    window.location.hash ="login";
  },
 
- // Admin-only helpers (simple wrappers)
+ 
  listUsers: function(cb){
    $.ajax({
      url: Constants.PROJECT_BASE_URL + "users",
@@ -170,7 +170,7 @@ var UserService = {
         return;
     }
 
-    // Bind buttons
+    
     $('#btn-show-update-form').off('click').on('click', function() {
         $('#update-form-container').fadeIn();
         // Pre-fill form with current user data if possible, or fetch it

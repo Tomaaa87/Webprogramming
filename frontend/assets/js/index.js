@@ -26,10 +26,6 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/style.css');
-        loadJS('./assets/js/weather.js', function() {
-            console.log('test1');
-        });
-
         console.log("About page ready!");
     }
 });
@@ -69,17 +65,14 @@ app.route({
     view: "projects1",
     onReady: function() {
         console.log("About page created!");
-        loadCSS('./assets/css/projects.css');
+        loadCSS('./assets/css/shop.css');
         loadJS('./assets/js/toggleVisibility.js', function() {
             console.log('test1');
         });
         loadJS('./assets/js/projects.js', function() {
             console.log('test1');
         });
-        loadJS('./assets/js/lighttheme.js', function() {
-            console.log('test1');
-        });
-           console.log("About page ready!");
+        console.log("About page ready!");
     }
 });
 app.route({
@@ -98,8 +91,22 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/gume.css');
-     
-           console.log("About page ready!");
+        console.log("About page ready!");
+        ShopService.init();
+        (function()
+{
+  if( window.localStorage )
+  {
+    if( !localStorage.getItem('firstLoad') )
+    {
+      localStorage['firstLoad'] = true;
+      window.location.reload();
+    }  
+    else
+      localStorage.removeItem('firstLoad');
+  }
+})();
+        
     }
 });
 app.route({
@@ -107,8 +114,22 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/motor.css');
-   
-           console.log("About page ready!");
+        console.log("About page ready!");
+        ShopService.init();
+        (function()
+{
+  if( window.localStorage )
+  {
+    if( !localStorage.getItem('firstLoad') )
+    {
+      localStorage['firstLoad'] = true;
+      window.location.reload();
+    }  
+    else
+      localStorage.removeItem('firstLoad');
+  }
+})();
+        
     }
 });
 app.route({
@@ -116,17 +137,32 @@ app.route({
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/body12.css');
-     
-           console.log("About page ready!");
+        console.log("About page ready!");
+        ShopService.init();
+        (function()
+{
+  if( window.localStorage )
+  {
+    if( !localStorage.getItem('firstLoad') )
+    {
+      localStorage['firstLoad'] = true;
+      window.location.reload();
+    }  
+    else
+      localStorage.removeItem('firstLoad');
+  }
+})();
+        
     }
 });
+//https://stackoverflow.com/questions/6985507/one-time-page-refresh-after-first-page-load/28840664#28840664
 app.route({
     view: "cart",
     onReady: function() {
         console.log("About page created!");
         loadCSS('./assets/css/shop.css');
-
-           console.log("About page ready!");
+        console.log("About page ready!");
+        window.CartService.init();
     }
 });
 app.route({
@@ -135,6 +171,8 @@ app.route({
         console.log("About page created!");
         loadCSS('./assets/css/shop.css');
            console.log("About page ready!");
+        window.CustomOrderService.init();
+        
     }
 });
 app.route({

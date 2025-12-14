@@ -25,7 +25,7 @@ var AdminServiceOrders = {
              document.getElementById('insert-order-modal').style.display = 'none';
         });
 
-        // Modal closing logic
+        // zatvaranje modala 
         var closeBtns = document.querySelectorAll('.close-modal');
         closeBtns.forEach(function(btn) {
             btn.onclick = function() {
@@ -199,7 +199,6 @@ var AdminServiceOrders = {
 
     insertOrder: function() {
         document.getElementById('insert-order-modal').style.display = 'flex';
-        // Reset form
         document.getElementById('insert-order-form').reset();
         document.getElementById('order-items-container').innerHTML = `
             <div class="order-item-row">

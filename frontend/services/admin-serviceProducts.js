@@ -1,54 +1,73 @@
 var AdminServiceProducts = {
+    IMGBB_API_KEY :'6c9a4bc953bb82a7a584845027e954ad',
     init: function() {
         console.log("AdminServiceProducts initialized");
         
-        this.attachListener('admin-products-by-category', 'click', this.openProductsByCategoryModal);
-        this.attachListener('admin-products-in-stock', 'click', this.productsInStock);
-        this.attachListener('admin-product-by-id', 'click', this.openProductByIdModal);
-        this.attachListener('admin-products-all', 'click', this.getAllProducts);
-        this.attachListener('admin-add-product', 'click', this.openAddProductModal);
-        this.attachListener('admin-update-product', 'click', this.openUpdateProductModal);
-        this.attachListener('admin-update-stock', 'click', this.openUpdateStockModal);
-        this.attachListener('admin-delete-product', 'click', this.openDeleteProductModal);
+        // Use setTimeout to ensure DOM is fully loaded
+        setTimeout(() => {
+            const section = document.getElementById('adminProducts');
+            if (!section) {
+                console.error('adminProducts section not found');
+                return;
+            }
+            
+            // Remove old delegated listener if exists
+            if (this._delegatedHandler) {
+                section.removeEventListener('click', this._delegatedHandler);
+                section.removeEventListener('submit', this._delegatedHandler);
+            }        
+            
+            // Create delegated handler
+            this._delegatedHandler = function(e) {
+                const target = e.target;
+                
+                // Handle button clicks
+                if (target.id === 'admin-products-by-category') AdminServiceProducts.openProductsByCategoryModal();
+                else if (target.id === 'admin-products-in-stock') AdminServiceProducts.productsInStock();
+                else if (target.id === 'admin-product-by-id') AdminServiceProducts.openProductByIdModal();
+                else if (target.id === 'admin-products-all') AdminServiceProducts.getAllProducts();
+                else if (target.id === 'admin-add-product') AdminServiceProducts.openAddProductModal();
+                else if (target.id === 'admin-update-product') AdminServiceProducts.openUpdateProductModal();
+                else if (target.id === 'admin-update-stock') AdminServiceProducts.openUpdateStockModal();
+                else if (target.id === 'admin-delete-product') AdminServiceProducts.openDeleteProductModal();
+                
+                // Handle form submissions
+                else if (target.id === 'form-products-by-category') { e.preventDefault(); AdminServiceProducts.submitProductsByCategory(e); }
+                else if (target.id === 'form-product-by-id') { e.preventDefault(); AdminServiceProducts.submitProductById(e); }
+                else if (target.id === 'form-add-product') { e.preventDefault(); AdminServiceProducts.submitAddProduct(e); }
+                else if (target.id === 'form-update-product') { e.preventDefault(); AdminServiceProducts.submitUpdateProduct(e); }
+                else if (target.id === 'form-update-stock') { e.preventDefault(); AdminServiceProducts.submitUpdateStock(e); }
+                else if (target.id === 'form-delete-product') { e.preventDefault(); AdminServiceProducts.submitDeleteProduct(e); }
+            }.bind(this);
+            
+            section.addEventListener('click', this._delegatedHandler);
+            section.addEventListener('submit', this._delegatedHandler);
 
-        this.attachListener('form-products-by-category', 'submit', this.submitProductsByCategory);
-        this.attachListener('form-product-by-id', 'submit', this.submitProductById);
-        this.attachListener('form-add-product', 'submit', this.submitAddProduct);
-        this.attachListener('form-update-product', 'submit', this.submitUpdateProduct);
-        this.attachListener('form-update-stock', 'submit', this.submitUpdateStock);
-        this.attachListener('form-delete-product', 'submit', this.submitDeleteProduct);
+            // Modal closing logic
+            var closeBtns = document.querySelectorAll('.close-modal');
+            closeBtns.forEach(function(btn) {
+                btn.onclick = function() {
+                    var modalId = this.getAttribute('data-modal');
+                    if (modalId) {
+                        document.getElementById(modalId).style.display = 'none';
+                    } else {
+                        var overlay = this.closest('.modal-overlay');
+                        if (overlay) overlay.style.display = 'none';
+                    }
+                };
+            });
 
-        // Modal closing logic
-        var closeBtns = document.querySelectorAll('.close-modal');
-        closeBtns.forEach(function(btn) {
-            btn.onclick = function() {
-                var modalId = this.getAttribute('data-modal');
-                if (modalId) {
-                    document.getElementById(modalId).style.display = 'none';
-                } else {
-                    var overlay = this.closest('.modal-overlay');
-                    if (overlay) overlay.style.display = 'none';
-                }
-            };
-        });
-
-        var overlays = document.querySelectorAll('.modal-overlay');
-        overlays.forEach(function(overlay) {
-            overlay.onclick = function(e) {
-                if (e.target === this) {
-                    this.style.display = 'none';
-                }
-            };
-        });
+            var overlays = document.querySelectorAll('.modal-overlay');
+            overlays.forEach(function(overlay) {
+                overlay.onclick = function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                };
+            });
+        }, 0);
     },
 
-    attachListener: function(id, event, handler) {
-        const el = document.getElementById(id);
-        if (el) {
-            el.removeEventListener(event, handler);
-            el.addEventListener(event, handler);
-        }
-    },
 
     openProductsByCategoryModal: function() { AdminServiceProducts.openModal('modal-products-by-category'); },
     openProductByIdModal: function() { AdminServiceProducts.openModal('modal-product-by-id'); },
@@ -73,19 +92,45 @@ var AdminServiceProducts = {
 
     submitAddProduct: function(e) {
         e.preventDefault();
-        const data = {
+        var data = {
             name: document.getElementById('input-add-product-name').value,
             price: parseFloat(document.getElementById('input-add-product-price').value),
             description: document.getElementById('input-add-product-description').value,
-            category_id: parseInt(document.getElementById('input-add-product-category-id').value),
-            image_url: document.getElementById('input-add-product-image-url').value || ""
+            category_id: parseInt(document.getElementById('input-add-product-category-id').value)
         };
-        AdminServiceProducts.addProduct(data);
-        document.getElementById('modal-add-product').style.display = 'none';
+        
+        var file = document.getElementById('input-add-product-image-file').files[0];
+        
+        if (!file) {
+            alert('Please select an image file.');
+            return;
+        }
+
+        adminSetStatus('Uploading image to ImgBB...', 'info');
+        var formData = new FormData();
+        formData.append("image", file);
+        
+        fetch('https://api.imgbb.com/1/upload?key=' + AdminServiceProducts.IMGBB_API_KEY, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                data.image_url = result.data.url;
+                AdminServiceProducts.addProduct(data);
+                document.getElementById('modal-add-product').style.display = 'none';
+            } else {
+                adminSetStatus('ImgBB Upload Failed: ' + result.status_txt, 'error');
+            }
+        })
+        .catch(function(err) {
+            adminSetStatus('Network Error during image upload.', 'error');
+        });
     },
 
     submitUpdateProduct: function(e) {
-        e.preventDefault();
+       e.preventDefault();
         const id = document.getElementById('input-update-product-id').value;
         const data = {};
         
@@ -101,16 +146,43 @@ var AdminServiceProducts = {
         const category_id = document.getElementById('input-update-product-category-id').value;
         if (category_id) data.category_id = parseInt(category_id);
 
-        const image_url = document.getElementById('input-update-product-image-url').value;
-        if (image_url) data.image_url = image_url;
+        var file = document.getElementById('input-update-product-image-file').files[0];
+
+        var applyUpdate = function(payload) {
+            AdminServiceProducts.updateProduct(id, payload);
+            document.getElementById('modal-update-product').style.display = 'none';
+        };
+
+        if (file) {
+            adminSetStatus('Uploading new image to ImgBB...', 'info');
+            var formData = new FormData();
+            formData.append("image", file);
+            
+            fetch('https://api.imgbb.com/1/upload?key=' + AdminServiceProducts.IMGBB_API_KEY, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    data.image_url = result.data.url;
+                    applyUpdate(data);
+                } else {
+                    adminSetStatus('ImgBB Upload Failed: ' + result.status_txt, 'error');
+                }
+            })
+            .catch(function(err) {
+                adminSetStatus('Network Error during image update.', 'error');
+            });
+            return;
+        }
 
         if (Object.keys(data).length === 0) {
             alert("No changes entered.");
             return;
         }
 
-        AdminServiceProducts.updateProduct(id, data);
-        document.getElementById('modal-update-product').style.display = 'none';
+        applyUpdate(data);
     },
 
     submitUpdateStock: function(e) {
@@ -188,6 +260,11 @@ var AdminServiceProducts = {
             adminSetStatus('Product added successfully', 'success');
             AdminServiceProducts.getAllProducts();
         }, function(error) {
+            if (error && error.status === 200) {
+                adminSetStatus('Product added successfully', 'success');
+                AdminServiceProducts.getAllProducts();
+                return;
+            }
             adminSetStatus('Error adding product', 'error');
             console.error(error);
         });
@@ -199,6 +276,11 @@ var AdminServiceProducts = {
             adminSetStatus('Product updated successfully', 'success');
             AdminServiceProducts.getAllProducts();
         }, function(error) {
+            if (error && error.status === 200) {
+                adminSetStatus('Product updated successfully', 'success');
+                AdminServiceProducts.getAllProducts();
+                return;
+            }
             adminSetStatus('Error updating product', 'error');
             console.error(error);
         });
@@ -216,10 +298,6 @@ var AdminServiceProducts = {
     },
 
     deleteProduct: function(id) {
-        // Note: The confirmation is now implicit in the modal action, 
-        // but we could add another confirmation step if desired. 
-        // For now, clicking "Delete" in the modal is the confirmation.
-        
         adminSetStatus('Deleting product...');
         RestClient.delete('products/' + id, {}, function(response) {
             adminSetStatus('Product deleted successfully', 'success');

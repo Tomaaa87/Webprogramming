@@ -15,7 +15,7 @@ var AdminServiceCategories = {
         this.attachListener('form-update-category', 'submit', this.submitUpdateCategory);
         this.attachListener('form-delete-category', 'submit', this.submitDeleteCategory);
 
-        // Modal closing logic
+        // zatvaranje modala 
         var closeBtns = document.querySelectorAll('.close-modal');
         closeBtns.forEach(function(btn) {
             btn.onclick = function() {
@@ -69,12 +69,29 @@ var AdminServiceCategories = {
 
     submitAddCategory: function(e) {
         e.preventDefault();
-        const data = {
+        var file = document.getElementById('input-add-category-image-file').files[0];
+        var data = {
             category_name: document.getElementById('input-add-category-name').value,
             description: document.getElementById('input-add-category-description').value
         };
-        AdminServiceCategories.addCategory(data);
-        document.getElementById('modal-add-category').style.display = 'none';
+
+        var finish = function(payload) {
+            AdminServiceCategories.addCategory(payload);
+            document.getElementById('modal-add-category').style.display = 'none';
+        };
+
+        if (file) {
+            Utils.parseImageWithType(file).then(function(result){
+                data.image_base64 = result.base64;
+                data.image_type = result.type;
+                finish(data);
+            }).catch(function(err){
+                console.error('Image parse failed', err);
+                finish(data);
+            });
+        } else {
+            finish(data);
+        }
     },
 
     submitUpdateCategory: function(e) {
@@ -88,13 +105,30 @@ var AdminServiceCategories = {
         const description = document.getElementById('input-update-category-description').value;
         if (description) data.description = description;
 
-        if (Object.keys(data).length === 0) {
+        var file = document.getElementById('input-update-category-image-file').files[0];
+        if (!file && Object.keys(data).length === 0) {
             alert("No changes entered.");
             return;
         }
 
-        AdminServiceCategories.updateCategory(id, data);
-        document.getElementById('modal-update-category').style.display = 'none';
+        var applyUpdate = function(payload) {
+            AdminServiceCategories.updateCategory(id, payload);
+            document.getElementById('modal-update-category').style.display = 'none';
+        };
+
+        if (file) {
+            Utils.parseImageWithType(file).then(function(result){
+                data.image_base64 = result.base64;
+                data.image_type = result.type;
+                applyUpdate(data);
+            }).catch(function(err){
+                console.error('Image parse failed', err);
+                applyUpdate(data);
+            });
+            return;
+        }
+
+        applyUpdate(data);
     },
 
     submitDeleteCategory: function(e) {
@@ -150,7 +184,12 @@ var AdminServiceCategories = {
             adminSetStatus('Category added successfully', 'success');
             AdminServiceCategories.listCategories();
         }, function(error) {
-            var msg = error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'Error adding category';
+            if (error && error.status === 200) {
+                adminSetStatus('Category added successfully', 'success');
+                AdminServiceCategories.listCategories();
+                return;
+            }
+            var msg = error && error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'Error adding category';
             adminSetStatus(msg, 'error');
             console.error(error);
         });
@@ -162,7 +201,12 @@ var AdminServiceCategories = {
             adminSetStatus('Category updated successfully', 'success');
             AdminServiceCategories.listCategories();
         }, function(error) {
-            var msg = error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'Error updating category';
+            if (error && error.status === 200) {
+                adminSetStatus('Category updated successfully', 'success');
+                AdminServiceCategories.listCategories();
+                return;
+            }
+            var msg = error && error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'Error updating category';
             adminSetStatus(msg, 'error');
             console.error(error);
         });

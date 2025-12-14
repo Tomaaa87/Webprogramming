@@ -17,7 +17,7 @@ var AdminServiceCustomOrders = {
         this.attachListener('form-update-custom-order-status', 'submit', this.submitUpdateCustomOrderStatus);
         this.attachListener('form-delete-custom-order', 'submit', this.submitDeleteCustomOrder);
 
-        // Modal closing logic
+        // zatvaranje modala 
         var closeBtns = document.querySelectorAll('.close-modal');
         closeBtns.forEach(function(btn) {
             btn.onclick = function() {

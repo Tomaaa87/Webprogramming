@@ -77,12 +77,13 @@ Flight::route('GET /custom-orders/user/@user_id', function($user_id) {
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
- *             required={"order_id","title","details","estimated_price","category"},
- *             @OA\Property(property="order_id", type="integer", example=15),
+ *             required={"title","details","estimated_price","category"},
+ *             @OA\Property(property="order_id", type="integer", example=15, description="Optional; if omitted a parent order is created automatically"),
  *             @OA\Property(property="title", type="string", example="Air suspension install"),
  *             @OA\Property(property="details", type="string", example="Installation of AirLift kit"),
  *             @OA\Property(property="estimated_price", type="number", example=5200),
- *             @OA\Property(property="category", type="string", example="Suspension")
+ *             @OA\Property(property="category", type="string", example="Suspension"),
+ *             @OA\Property(property="user_id", type="integer", example=7, description="Required; taken from token or payload")
  *         )
  *     ),
  *     @OA\Response(

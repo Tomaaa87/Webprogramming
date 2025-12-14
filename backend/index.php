@@ -37,6 +37,7 @@ Flight::before("start", function(&$params, &$output) {
         strpos($url, '/auth/register') === 0 ||
         strpos($url, '/public/v1/docs') === 0 ||
         strpos($url, '/docs') === 0 ||
+        strpos($url, '/products/public') === 0 ||
         preg_match('#\.(css|js|png|jpg|jpeg|svg|ico)$#i', $url)
     ) {
         return TRUE;

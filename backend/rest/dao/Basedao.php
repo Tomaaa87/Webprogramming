@@ -4,7 +4,7 @@ require_once __DIR__ . "/../config.php";
 class BaseDao
 {
     protected $connection;
-    private $table_name;
+    protected $table_name;
 
     public function __construct($table_name)
     {

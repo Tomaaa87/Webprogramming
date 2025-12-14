@@ -10,12 +10,17 @@ class ProductDao extends BaseDao {
         parent::__construct("products");
     }
 
+
     /** uzima sve proizvode */
     public function getAllProducts() {
-        return parent::getAll();
+        return $this->query("SELECT * FROM products");
     }
+
     public function getProductById($id) {
-        return $this->getById($id);
+        return $this->query_unique(
+            "SELECT * FROM products WHERE id = :id",
+            ["id" => $id]
+        );
     }
 
     /**svi produkti po category id */
@@ -47,7 +52,14 @@ class ProductDao extends BaseDao {
         return $this->query("SELECT * FROM products WHERE stock > 0 ORDER BY added_at DESC");
     }
     public function updateStock($id, $stock) {
-        return $this->update(["stock" => $stock], $id);
+        $this->execute_query(
+            "UPDATE products SET stock = :stock WHERE id = :id",
+            ["stock" => $stock, "id" => $id]
+        );
+        return $this->query_unique(
+            "SELECT * FROM products WHERE id = :id",
+            ["id" => $id]
+        );
     }
     public function deleteProduct($id) {
         return $this->delete($id);

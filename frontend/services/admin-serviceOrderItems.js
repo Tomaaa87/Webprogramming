@@ -16,7 +16,7 @@ var AdminServiceOrderItems = {
         this.attachListener('form-calc-order-total', 'submit', this.submitCalcOrderTotal);
         this.attachListener('form-item-qty-by-product', 'submit', this.submitItemQtyByProduct);
 
-        // Modal closing logic
+        // zatvaranje modala 
         var closeBtns = document.querySelectorAll('.close-modal');
         closeBtns.forEach(function(btn) {
             btn.onclick = function() {
@@ -121,7 +121,7 @@ var AdminServiceOrderItems = {
         adminSetStatus('Deleting items...');
         RestClient.delete('order-items/' + orderId, {}, function(response) {
             adminSetStatus('Items deleted successfully', 'success');
-            AdminServiceOrderItems.listItemsByOrder(orderId); // Refresh if we were looking at this order
+            AdminServiceOrderItems.listItemsByOrder(orderId); 
         }, function(error) {
             adminSetStatus('Error deleting items', 'error');
             console.error(error);
@@ -175,7 +175,7 @@ var AdminServiceOrderItems = {
         adminSetStatus('Calculating total...');
         RestClient.get('order-items/total/' + orderId, function(data) {
             adminSetStatus('');
-            // data should be { total: 123.45 }
+        
             if (data && data.total !== undefined) {
                 alert("Total for Order " + orderId + ": " + data.total);
                 adminSetStatus("Total: " + data.total, 'success');
@@ -192,7 +192,7 @@ var AdminServiceOrderItems = {
         adminSetStatus('Getting quantity...');
         RestClient.get('order-items/product/' + productId + '/quantity', function(data) {
             adminSetStatus('');
-            // data should be { total_quantity: 50 }
+        
             if (data && data.total_quantity !== undefined) {
                 alert("Total Quantity for Product " + productId + ": " + data.total_quantity);
                 adminSetStatus("Total Quantity: " + data.total_quantity, 'success');

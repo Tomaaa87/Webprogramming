@@ -12,24 +12,10 @@ class CartService extends BaseService {
     }
     
     public function insertToCart($data) {
-        if (!isset($data['user_id']) || !isset($data['product_id'])) {
-            throw new Exception("user_id i product_id su obavezni.");
-        }
-
-        // kolicina pozitivna
-        if (isset($data['quantity']) && $data['quantity'] <= 0) {
-            throw new Exception("Quantity must be greater than zero.");
-        }
-
-        // cijena po jedinici mora biti pozitivna
-        if (isset($data['unit_price']) && $data['unit_price'] <= 0) {
-            throw new Exception("Unit price must be greater than zero.");
-        }
-
         return $this->dao->insertToCart(
             $data['user_id'],
             $data['product_id'],
-            $data['quantity'] ?? 1,
+            $data['quantity'],
             $data['unit_price'] ?? null
         );
     }

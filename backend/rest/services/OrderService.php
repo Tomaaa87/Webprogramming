@@ -85,7 +85,7 @@ class OrderService extends BaseService {
             $orderPayload = [
                 'user_id'      => $data['user_id'],
                 'total_amount' => $data['estimated_price'],
-                'status'       => 'Pending',
+                'status'       => 'Processing',
                 'is_custom'    => 1
             ];
             $newOrder = $this->dao->add($orderPayload);

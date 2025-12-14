@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../../data/roles.php';
 
 /**
@@ -22,10 +23,15 @@ require_once __DIR__ . '/../../data/roles.php';
  *     @OA\Response(response=500, description="Server error")
  * )
  */
+Flight::route('GET /products/public', function() {
+    Flight::json(Flight::productService()->getAllProducts());
+});
+
 Flight::route('GET /products/in-stock', function() {
     Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     Flight::json(Flight::productService()->getProductsInStock());
 });
+
 
 Flight::route('GET /products/all', function() {
     Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);

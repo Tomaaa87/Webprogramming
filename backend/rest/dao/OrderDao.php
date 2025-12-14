@@ -62,8 +62,7 @@ class OrderDao extends BaseDao {
                 oi.id AS order_item_id,
                 oi.quantity,
                 oi.price,
-                p.name AS product_name,
-                p.image_url
+                p.name AS product_name
             FROM orders o
             LEFT JOIN order_items oi ON oi.order_id = o.id
             LEFT JOIN products p ON p.id = oi.product_id

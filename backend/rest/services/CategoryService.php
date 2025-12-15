@@ -10,22 +10,27 @@ class CategoryService extends BaseService {
     }
     
     public function searchByName($name) {
-        return $this->dao->getByName($name);
+        // Delegate to DAO searchByName
+        return $this->dao->searchByName($name);
     }
     
     public function getAllCategories() {
         return $this->dao->getAllCategories();
     }
+
+    public function getCategoryById($id) {
+        return $this->dao->getCategoryById($id);
+    }
     
     public function insertCategory($data) {
         // duzina imena kategorije bar 3 slova
-        if (isset($data['category_name']) && strlen(trim($data['category_name'])) < 3) {
-            throw new Exception("Category name must be at least 3 characters long.");
+        if (!isset($data['category_name']) || strlen(trim($data['category_name'])) < 3) {
+            throw new Exception("Category name is required and must be at least 3 characters long.");
         }
 
         // opis kategorije mora biti dugacak bar 10 karaktera
-        if (isset($data['description']) && strlen(trim($data['description'])) < 10) {
-            throw new Exception("Category description must be at least 10 characters long.");
+        if (!isset($data['description']) || strlen(trim($data['description'])) < 10) {
+            throw new Exception("Category description is required and must be at least 10 characters long.");
         }
 
         return $this->dao->insertCategory($data);

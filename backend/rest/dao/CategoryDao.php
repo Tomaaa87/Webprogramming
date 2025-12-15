@@ -11,29 +11,34 @@ class CategoryDao extends BaseDao {
         parent::__construct("categories");
     }
 
+    private $selectColumns = "id, category_name, description, added_at";
+
     /** sve kategorije */
     public function getAllCategories() {
-        return $this->getAll();
+        return $this->query("SELECT {$this->selectColumns} FROM categories");
     }
 
+    /** pojedinacna kategorija po id */
+    public function getCategoryById($id) {
+        return $this->query_unique(
+            "SELECT {$this->selectColumns} FROM categories WHERE id = :id",
+            ["id" => $id]
+        );
+    }
+    
     /**  trazi kategorije gdje je ime slicno */
     public function searchByName($name) {
         $like = "%" . $name . "%";
         return $this->query(
-            "SELECT * FROM categories WHERE category_name LIKE :name",
+            "SELECT {$this->selectColumns} FROM categories WHERE category_name LIKE :name",
             ["name" => $like]
         );
     }
     public function insertCategory($data) {
-        return $this->insert([
-            "category_name" => $data["category_name"],
-            "description"   => $data["description"]
-        ]);}
+        return $this->add($data);
+    }
     public function updateCategory($id, $data) {
-        return $this->update($id, [
-            "category_name" => $data["category_name"],
-            "description"   => $data["description"]
-        ]);
+        return $this->update($data, $id);
     }
     public function deleteCategory($id) {
         return $this->delete($id);}

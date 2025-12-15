@@ -1,0 +1,132 @@
+<div class="admin-container">
+	<header class="admin-header">
+		<h1>User Admin</h1>
+		<p>Manage users, roles, and accounts</p>
+	</header>
+
+	<div class="admin-grid">
+		<section class="admin-card">
+			<h2>Browse & Search</h2>
+			<p>List, filter by role, or search users</p>
+			<div class="admin-actions">
+				<button class="admin-btn" id="admin-list-users">List Users</button>
+				<button class="admin-btn" id="admin-search-users">Search Users</button>
+				<button class="admin-btn" id="admin-users-by-role">Users By Role</button>
+				<button class="admin-btn" id="admin-user-by-id">Get User By ID</button>
+				<button class="admin-btn" id="admin-user-by-email">Get User By Email</button>
+			</div>
+		</section>
+
+		<section class="admin-card">
+			<h2>Modify</h2>
+			<p>Create, update, or delete users</p>
+			<div class="admin-actions">
+				<button class="admin-btn" id="admin-add-user">Add User</button>
+				<button class="admin-btn admin-btn-danger" id="admin-delete-user">Delete User</button>
+			</div>
+		</section>
+	</div>
+	<div id="admin-output" class="admin-output">
+		<div id="admin-status" class="admin-status"></div>
+		<div id="admin-table" class="admin-table"></div>
+	</div>
+
+    <!-- Search Users Modal -->
+    <div id="modal-search-users" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-search-users">&times;</span>
+            <h2>Search Users</h2>
+            <form id="form-search-users">
+                <label>Search Term (Name or Email)</label>
+                <input type="text" id="input-search-users-term" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Users By Role Modal -->
+    <div id="modal-users-by-role" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-users-by-role">&times;</span>
+            <h2>Users By Role</h2>
+            <form id="form-users-by-role">
+                <label>Role</label>
+                <select id="input-users-by-role-val" required style="width: 100%; padding: 8px; margin-top: 5px;">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Get User By ID Modal -->
+    <div id="modal-user-by-id" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-user-by-id">&times;</span>
+            <h2>Get User By ID</h2>
+            <form id="form-user-by-id">
+                <label>User ID</label>
+                <input type="number" id="input-user-by-id-val" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Get User By Email Modal -->
+    <div id="modal-user-by-email" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-user-by-email">&times;</span>
+            <h2>Get User By Email</h2>
+            <form id="form-user-by-email">
+                <label>Email</label>
+                <input type="email" id="input-user-by-email-val" required>
+                <br><br>
+                <button type="submit" class="admin-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="modal-add-user" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-add-user">&times;</span>
+            <h2>Add User</h2>
+            <form id="form-add-user">
+                <label>Name</label>
+                <input type="text" id="input-add-user-name" required>
+                <br><br>
+                <label>Email</label>
+                <input type="email" id="input-add-user-email" required>
+                <br><br>
+                <label>Password</label>
+                <input type="password" id="input-add-user-password" required>
+                <br><br>
+                <label>Role</label>
+                <select id="input-add-user-role" style="width: 100%; padding: 8px; margin-top: 5px;">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <br><br>
+                <button type="submit" class="admin-btn">Add User</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete User Modal -->
+    <div id="modal-delete-user" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" data-modal="modal-delete-user">&times;</span>
+            <h2>Delete User</h2>
+            <form id="form-delete-user">
+                <label>User ID</label>
+                <input type="number" id="input-delete-user-id" required>
+                <br><br>
+                <button type="submit" class="admin-btn admin-btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>

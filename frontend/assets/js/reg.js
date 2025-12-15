@@ -1,7 +1,5 @@
 const password = document.getElementById('password');
-        const confirmPassword = document.getElementById('confirmPassword');
         const strengthBar = document.getElementById('strengthBar');
-        const passwordMatchError = document.getElementById('passwordMatchError');
         const email = document.getElementById('email');
         const emailError = document.getElementById('emailError');
         const form = document.getElementById('registrationForm');
@@ -16,13 +14,7 @@ const password = document.getElementById('password');
             else if (strength === 'strong') strengthBar.classList.add('strong');
         });
 
-        confirmPassword.addEventListener('input', () => {
-            if (confirmPassword.value !== password.value) {
-                passwordMatchError.style.display = 'inline';
-            } else {
-                passwordMatchError.style.display = 'none';
-            }
-        });
+
 
         email.addEventListener('input', () => {
             const isValid = email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
@@ -46,10 +38,7 @@ const password = document.getElementById('password');
             e.preventDefault(); 
             
            
-            if (confirmPassword.value !== password.value) {
-                alert('Passwords must match!');
-                return;
-            }
+
             if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
                 alert('Invalid email address!');
                 return;

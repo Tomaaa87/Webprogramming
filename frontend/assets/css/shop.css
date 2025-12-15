@@ -4,7 +4,7 @@ body {
     padding: 0;
     background: rgba(0, 0, 0, 0.5) url('../images/shopbck.jpg') no-repeat center center fixed;
     background-color: rgba(0,0,0,0.6);
-     background-blend-mode: multiply;
+    background-blend-mode: multiply;
     background-position: center;
     background-size: cover;
     color: #fff;
@@ -123,9 +123,11 @@ footer p {
     color: grey;
     font-size: 1rem;
 }
+
 .hamburger-menu {
     display: none;
 }
+
 .accordion-content {
     overflow: hidden;
     max-height: 0; 
@@ -163,10 +165,13 @@ footer p {
     color: #e63946;
     cursor: pointer;
 }
+
 .active {
     font-weight: bold;
     color: red; 
 }
+
+/* --- CART SECTION (Updated) --- */
 .cart-container {
   display: flex;
   flex-direction: column;
@@ -192,30 +197,137 @@ footer p {
   width: 120px;
   height: auto;
   border-radius: 10px;
+  object-fit: cover;
+}
+
+.cart-details {
+  flex: 1; /* Ensures details take up remaining space */
 }
 
 .cart-details h3 {
-  margin: 0;
+  margin: 0 0 5px 0;
+  color: #e63946; /* Matching your theme red */
 }
 
+/* NEW: Styles for Quantity Controls (+ / -) */
+.cart-qty-row {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.cart-qty-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.cart-qty-btn:hover {
+    background-color: #e63946;
+    border-color: #e63946;
+}
+
+.cart-qty-val {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0 15px;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* NEW: Style for Remove Button */
+.cart-remove {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background 0.2s;
+    margin-top: 5px;
+}
+
+.cart-remove:hover {
+    background-color: #b71c1c;
+}
+/* --- END NEW CART STYLES --- */
+
 .cart-total {
-  text-align: right;
-  color: #fff;
-  margin-top: 10px;
+    text-align: center;
+    color: #fff;
+    margin-top: 18px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    display: block;
+    background: rgba(0,0,0,0.35);
+    padding: 12px 18px;
+    border-radius: 10px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+.cart-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    padding-bottom: 60px; /* Extra space for fixed footer */
 }
 
 .checkout-btn {
-  background: #d32f2f;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+    background: #d32f2f; /* Standard Red */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
+    transition: background-color 0.18s ease, transform 0.06s ease;
+}
+
+.checkout-btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .checkout-btn:hover {
-  background: #b71c1c;
+    background: #b71c1c;
+    transform: translateY(-1px);
 }
+
+/* Green Checkout Button specifically */
+#cart-checkout {
+    background-color: #28a745;
+}
+#cart-checkout:hover {
+    background-color: #218838;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    align-items: center; 
+}
+
 /* CUSTOM ORDER PAGE  */
 .container33 {
     max-width: 550px;
@@ -279,6 +391,97 @@ footer p {
     background: #ff4757;
 }
 
+.hamburger {
+    display: none;
+}
+
+.thumbnail {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid #e63946; 
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.thumbnail:hover {
+    transform: scale(1.1);
+    border-color: #ff4d6d; 
+}
+
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 10; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); 
+    overflow: auto; 
+}
+
+.modal-content {
+    display: block;
+    margin: 50px auto;
+    max-width: 80%;
+    border: 5px solid #e63946; 
+}
+
+#caption {
+    text-align: center;
+    color: #ff4d6d; 
+    font-size: 18px;
+    padding: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #e63946; 
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ff4d6d; 
+}
+
+button:hover {
+    background-color: #f0f0f0; 
+}
+
+button:active {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item { 
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    gap: 10px; 
+} 
+
+.toggle-btn { 
+    all: unset; 
+    cursor: pointer; 
+    padding: 10px 20px; 
+    background-color: #e63946; 
+    color: white; 
+    border: 2px solid #e63946; 
+    border-radius: 5px; 
+    font-size: 1rem; 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    transition: background-color 0.3s, border-color 0.3s; 
+}
+
+.content {
+    text-decoration: solid;
+    font-size: large;
+    font-style: italic;
+}
 
 
 @media (max-width: 768px) {

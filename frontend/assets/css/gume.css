@@ -167,6 +167,9 @@ footer p {
     font-weight: bold;
     color: red; 
 }
+.hamburger {
+    display: none;
+}
 
 
 @media (max-width: 768px) {

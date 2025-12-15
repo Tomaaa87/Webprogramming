@@ -1,0 +1,323 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/audi_rs7_4k-HD.jpg');
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-position: center;
+    background-color: rgba(0,0,0,0.6); 
+    color: #fff;
+    transition: background-image 0.3s ease; 
+    min-height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+header {
+    text-align: center;
+    margin-top: 40px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header h1 {
+    font-size: 3rem;
+    color: red;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: grey;
+    margin-top: 10px;
+}
+
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 10px 0;
+    margin-top: 30px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    margin: 0 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: red;
+}
+
+.main-content {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7); 
+    margin-top: 30px;
+    border-radius: 8px;
+}
+.active {
+    font-weight: bold;
+    color: red; 
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); 
+    width: 100%;
+    margin-top: auto; 
+}
+
+footer p {
+    color: grey;
+    font-size: 1rem;
+}
+.hamburger-menu {
+    display: none;
+}
+section {
+    margin-bottom: 40px;
+}
+.hamburger {
+    display: none;
+}
+
+
+/* Admin dashboard scoped styles */
+.admin-container {
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 0 0.75rem;
+}
+
+.admin-header {
+    text-align: center;
+    margin-top: 40px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.admin-header h1 {
+    font-size: 2.2rem;
+    color: red;
+}
+
+.admin-header p {
+    font-size: 1rem;
+    color: grey;
+    margin-top: 8px;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.admin-card {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    min-height: 150px;
+}
+
+.admin-card h2 {
+    margin: 0 0 .4rem;
+    font-size: 1.2rem;
+    color: red;
+}
+
+.admin-card p {
+    margin: 0 0 0.75rem;
+    color: #bbb;
+    font-size: 0.95rem;
+}
+
+.admin-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.admin-btn {
+    appearance: none;
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.95rem;
+    transition: transform .05s ease-in-out, box-shadow .2s ease, background-color .2s ease;
+}
+
+.admin-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, .4);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.admin-btn-danger {
+    background: #c62828;
+    border-color: #c62828;
+}
+
+
+/* Admin output area */
+.admin-output {
+    margin-top: 1rem;
+    background: rgba(0,0,0,.6);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    padding: 1rem;
+}
+.admin-status {
+    margin-bottom: .75rem;
+    color: #ddd;
+    min-height: 20px;
+}
+.admin-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.admin-table th, .admin-table td {
+    border: 1px solid rgba(255,255,255,.15);
+    padding: .5rem;
+}
+.admin-table th { color: red; }
+
+@media (max-width: 768px) {
+    .admin-header h1 { font-size: 1.6rem; }
+    .admin-grid { grid-template-columns: repeat(2, 1fr); }
+    body { overflow-y: auto; }
+}
+.hamburger-menu{
+    display:true;
+}
+
+/* Make the output area scrollable */
+.admin-output {
+    margin-top: 20px;
+    /* overflow-y: auto;  Removed scroll */
+    /* max-height: 500px; Removed fixed height */
+    background: rgba(0,0,0,0.5);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    display: block; /* Ensure it takes space */
+    overflow-x: auto; /* Allow horizontal scroll for wide tables */
+}
+
+/* Ensure table looks good inside */
+.admin-table table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+.admin-table th, .admin-table td {
+    padding: 10px;
+    border: 1px solid #555;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: transparent;
+    /* position: sticky; Removed sticky */
+    /* top: 0; */
+}
+
+.admin-table tr:nth-child(even) {
+    background-color: rgba(255,255,255,0.05);
+}
+
+.admin-table tr:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 40px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    color: white;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-modal:hover {
+    color: red;
+}
+
+.modal-content label {
+    display: block;
+    margin-top: 10px;
+    color: #ccc;
+}
+
+.modal-content input, .modal-content select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background-color: #222;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 4px;
+}
+
+.modal-content input:focus, .modal-content select:focus {
+    border-color: red;
+    outline: none;
+}
+
+.order-item-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}

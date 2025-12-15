@@ -14,12 +14,8 @@ class OrderItemService {
             throw new Exception("order_id i price su obavezni.");
         }
 
-        return $this->dao->addItem([
-            "order_id" => $orderId,
-            "product_id" => $productId,
-            "quantity" => $quantity,
-            "price" => $price
-        ]);
+        // Align with DAO signature: pass discrete params
+        return $this->dao->addItem($orderId, $productId, $quantity, $price);
     }
 
     public function getByOrderId($id) {
@@ -33,6 +29,22 @@ class OrderItemService {
     }
     public function deleteByOrder($orderId) {
         return $this->dao->deleteByOrder($orderId);
+    }
+
+    public function updateQuantity($id, $quantity) {
+        return $this->dao->updateQuantity($id, $quantity);
+    }
+
+    public function deleteItem($id) {
+        return $this->dao->deleteItem($id);
+    }
+
+    public function getTotalByOrder($orderId) {
+        return $this->dao->getTotalByOrder($orderId);
+    }
+
+    public function getQuantityByProduct($productId) {
+        return $this->dao->getQuantityByProduct($productId);
     }
 }
 ?>

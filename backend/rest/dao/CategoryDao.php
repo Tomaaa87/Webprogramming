@@ -1,5 +1,5 @@
 <?php
-require_once 'BaseDao.php';
+require_once 'Basedao.php';
 
 /**
  * DAO za categorie i za crud operacije

@@ -8,20 +8,29 @@ class BaseDao
 
     public function __construct($table_name)
     {
-        $this->table_name = $table_name;
-        try {
-            $this->connection = new PDO(
-                "mysql:host=" . Config::DB_HOST() . ";dbname=" . Config::DB_NAME() . ";port=" . Config::DB_PORT(),
-                Config::DB_USER(),
-                Config::DB_PASSWORD(),
-                [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-                ]
-            );
-        } catch (PDOException $e) {
-            throw $e;
-        }
+    $this->table_name = $table_name;
+    try {
+        // Define the path to your certificate file
+        // This assumes ca-certificate.crt is in the same folder as BaseDao.php
+        $ca_cert_path = __DIR__ . '/../../ca-certificate.crt';
+
+        $this->connection = new PDO(
+            "mysql:host=" . Config::DB_HOST() . ";dbname=" . Config::DB_NAME() . ";port=" . Config::DB_PORT(),
+            Config::DB_USER(),
+            Config::DB_PASSWORD(),
+            [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                // SSL Configuration
+                PDO::MYSQL_ATTR_SSL_CA => $ca_cert_path,
+                // Required for some DO configurations to verify the server identity
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true, 
+            ]
+        );
+    } catch (PDOException $e) {
+        // This will now show the specific SSL or connection error in your logs
+        throw $e; 
+    }
     }
 
     protected function query($query, $params = [])

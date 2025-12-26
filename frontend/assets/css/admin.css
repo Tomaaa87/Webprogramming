@@ -97,6 +97,9 @@ section {
     display: none;
 }
 
+.hamburger-menu {
+    display: none;
+}
 
 /* Admin dashboard scoped styles */
 .admin-container {
@@ -123,10 +126,26 @@ section {
 }
 
 .admin-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin: 1.5rem 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin: 1.5rem 0;
+}
+
+@media (max-width: 1024px) {
+    .admin-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+    .admin-card {
+        min-width: 0;
+        width: 100%;
+    }
 }
 
 .admin-card {
@@ -207,13 +226,52 @@ section {
 }
 .admin-table th { color: red; }
 
+
 @media (max-width: 768px) {
     .admin-header h1 { font-size: 1.6rem; }
-    .admin-grid { grid-template-columns: repeat(2, 1fr); }
     body { overflow-y: auto; }
+    .main-content, .admin-card {
+        padding: 20px 8px;
+    }
+    .admin-card h2 { font-size: 1.1rem; }
+    .admin-card p { font-size: 0.9rem; }
+    .admin-btn { font-size: 0.9rem; padding: 0.6rem 0.8rem; }
+    .admin-header p { font-size: 0.9rem; }
+    .desktop-menu {
+        display: none !important;
+    }
+    .hamburger {
+        display: block !important;
+    }
+    .hamburger-menu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 8px;
+        z-index: 999;
+    }
+    .hamburger-menu.open {
+        display: block;
+    }
+    .hamburger-menu a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        display: block;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+    .hamburger-menu a:hover {
+        background-color: red;
+    }
 }
-.hamburger-menu{
-    display:true;
+
+.hamburger-menu {
+    display: block;
 }
 
 /* Make the output area scrollable */
@@ -320,4 +378,44 @@ section {
     display: flex;
     gap: 10px;
     align-items: center;
+}
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    form {
+        padding: 30px;
+    }
+
+    nav a {
+        font-size: 1rem;
+        padding: 10px 15px;
+        margin: 0 10px;
+    }
+
+    body {
+        background: auto;
+        background-blend-mode: darken;
+    }
+
+    label,
+    input,
+    select,
+    small {
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-header h1 { font-size: 1.2rem; }
+    .admin-card h2 { font-size: 1rem; }
+    .admin-card p, .admin-header p { font-size: 0.8rem; }
+    .admin-btn { font-size: 0.8rem; padding: 0.5rem 0.6rem; }
+    .admin-card { padding: 12px 4px; }
+    .admin-grid { gap: 0.5rem; }
 }

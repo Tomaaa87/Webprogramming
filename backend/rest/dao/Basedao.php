@@ -32,7 +32,7 @@ class BaseDao
         throw $e; 
     }
     }
-
+    
     protected function query($query, $params = [])
     {
         $stmt = $this->connection->prepare($query);

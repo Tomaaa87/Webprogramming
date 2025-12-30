@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../data/roles.php';
+require_once __DIR__ . '/../../data/Roles.php';
 
 /**
  * @OA\Tag(

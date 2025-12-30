@@ -10,7 +10,7 @@ require_once __DIR__ . "/rest/services/OrderItemService.php";
 require_once __DIR__ . "/rest/services/CustomOrderService.php";
 require_once __DIR__ . "/rest/services/AuthService.php";
 require_once __DIR__ . "/middleware/AuthMiddleware.php";
-require_once __DIR__ . "/data/roles.php";
+require_once __DIR__ . "/data/Roles.php";
 
 
 use Firebase\JWT\JWT;
@@ -33,11 +33,11 @@ Flight::register('auth_middleware', "AuthMiddleware");
 Flight::before("start", function(&$params, &$output) {
     $url = Flight::request()->url;
     if(
-        strpos($url, '/auth/login') === 0 ||
-        strpos($url, '/auth/register') === 0 ||
-        strpos($url, '/public/v1/docs') === 0 ||
-        strpos($url, '/docs') === 0 ||
-        strpos($url, '/products/public') === 0 ||
+        strpos($url, '/auth/login') !== false ||
+        strpos($url, '/auth/register') !== false ||
+        strpos($url, '/public/v1/docs') !== false ||
+        strpos($url, '/docs') !== false ||
+        strpos($url, '/products/public') !== false ||
         preg_match('#\.(css|js|png|jpg|jpeg|svg|ico)$#i', $url)
     ) {
         return TRUE;
